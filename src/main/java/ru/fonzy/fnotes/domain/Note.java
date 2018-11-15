@@ -1,15 +1,15 @@
 package ru.fonzy.fnotes.domain;
 
+import jdk.nashorn.internal.objects.annotations.Constructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor
 public class Note {
 
     @Id
@@ -20,6 +20,14 @@ public class Note {
 
     private String text;
 
-//    private User author;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public Note(String title, String text, User author) {
+        this.title = title;
+        this.text = text;
+        this.author = author;
+    }
 
 }
