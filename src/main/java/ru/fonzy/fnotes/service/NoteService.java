@@ -21,4 +21,8 @@ public class NoteService {
         Note note = new Note(title, text, author);
         noteRepository.save(note);
     }
+
+    public Iterable<Note> getNotesByAuthor(User author) {
+        return noteRepository.getAllByAuthor(author);
+    }
 }

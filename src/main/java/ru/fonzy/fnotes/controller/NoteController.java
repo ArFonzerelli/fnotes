@@ -8,12 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
-import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.service.NoteService;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class NoteController {
@@ -22,8 +18,10 @@ public class NoteController {
     NoteService noteService;
 
     @GetMapping("/notes")
-    public String showNotes(Model model){
-        model.addAttribute("notes", noteService.getAllNotes());
+    public String showNotes(@AuthenticationPrincipal User author,
+                            Model model){
+
+        model.addAttribute("notes", noteService.getNotesByAuthor(author));
 
         return "notes";
     }
@@ -36,7 +34,7 @@ public class NoteController {
             @RequestParam String text){
 
         if (Strings.isNullOrEmpty(title))
-            title = "Пустрой заголовок";
+            title = "Пустой заголовок";
 
         if (Strings.isNullOrEmpty(text))
             text = "Пустой текст";

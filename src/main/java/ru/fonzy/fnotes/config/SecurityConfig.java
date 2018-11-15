@@ -16,9 +16,6 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
-
-    @Autowired
     private UserService userService;
 
     @Override
@@ -35,22 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login_failed")
                 .and()
                     .logout()
-                    .permitAll()
-                .and()
-                    .csrf().disable();
+                    .permitAll();
+//                .and()
+//                    .csrf().disable();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-//                jdbcAuthentication()
                 .userDetailsService(userService)
-//                .dataSource(dataSource)
                 .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//                .usersByUsernameQuery(
-//                        "select username, password,enabled from user where username = ?")
-//                .authoritiesByUsernameQuery("" +
-//                        "select u.username, ur.roles from user u inner join user_role ur on u.id = ur.user_id where u.username = ?");
+
     }
 
 }

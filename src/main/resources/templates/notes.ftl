@@ -15,6 +15,7 @@
 <form method="post">
     <input type="text" name="title" placeholder="Заголовок">
     <input type="text" name="text" placeholder="Текст заметки">
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
     <button type="submit">Добавить</button>
 </form>
 
