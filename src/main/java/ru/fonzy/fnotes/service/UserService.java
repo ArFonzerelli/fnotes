@@ -14,7 +14,14 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public void addUser(User user){
+    public boolean addUser(User user){
+
+        User userInBase = userRepository.findByUsername(user.getUsername());
+
+        if (userInBase != null){
+            return false;
+        }
+
         user.setActive(true);
 
         HashSet<Role> roles = new HashSet<>();
@@ -22,5 +29,7 @@ public class UserService {
         user.setRoles(roles);
 
         userRepository.save(user);
+
+        return true;
     }
 }

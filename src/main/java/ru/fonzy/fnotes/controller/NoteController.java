@@ -14,7 +14,7 @@ import ru.fonzy.fnotes.service.NoteService;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class MainController {
+public class NoteController {
 
     @Autowired
     NoteService noteService;
@@ -22,7 +22,7 @@ public class MainController {
     @GetMapping("/")
     public String baseRedirect(){
 
-        return "redirect:notes";
+        return "/login";
     }
 
     @GetMapping("/notes")
@@ -34,7 +34,7 @@ public class MainController {
 
 
     @PostMapping("/notes")
-    public String addNote(@RequestParam String title, @RequestParam String text, Model model){
+    public String addNote(@RequestParam String title, @RequestParam String text){
 
         if (Strings.isNullOrEmpty(title))
             title = "Пустрой заголовок";
@@ -50,6 +50,5 @@ public class MainController {
 
         return "redirect:notes";
     }
-
 
 }

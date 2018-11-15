@@ -5,6 +5,7 @@
     <title>Регистрация</title>
 </head>
 <body>
+<#if message??><div>${message}</div></#if>
 <form action="/register" method="post">
     <div><label>Имя пользователя : <input type="text" name="username"/></label></div>
     <div><label>Пароль:<input type="text" name="password"/></label></div>
