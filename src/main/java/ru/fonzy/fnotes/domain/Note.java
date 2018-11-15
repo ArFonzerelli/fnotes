@@ -21,7 +21,5 @@ public class Note {
     private String text;
 
 //    private User author;
-//
-//    private User owner;
 
 }

@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.repository.NoteRepository;
 
-import java.util.List;
-
 @Service
 public class NoteService {
 

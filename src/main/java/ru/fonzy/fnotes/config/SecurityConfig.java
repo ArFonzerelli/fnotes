@@ -1,28 +1,14 @@
 package ru.fonzy.fnotes.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.web.DefaultRedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
-import java.io.IOException;
 
 @Component
 @EnableWebSecurity
@@ -42,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .permitAll()
                     .defaultSuccessUrl("/notes")
-                .failureHandler(getAuthenticationFailureHandler())
+                .failureUrl("/login_failed")
                 .and()
                     .logout()
                     .permitAll()
@@ -61,22 +47,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "select u.username, ur.roles from user u inner join user_role ur on u.id = ur.user_id where u.username = ?");
     }
 
-    private AuthenticationFailureHandler getAuthenticationFailureHandler(){
-        return new AuthenticationFailureHandler() {
-            @Override
-            public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-                httpServletResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-
-                HttpSession session = httpServletRequest.getSession(false);
-
-                if (session != null)
-                    session.setAttribute("loginFailed", "login failed");
-
-                if (httpServletResponse.isCommitted())
-                    return;
-
-                new DefaultRedirectStrategy().sendRedirect(httpServletRequest, httpServletResponse, "/login");
-            }
-        };
-    }
 }

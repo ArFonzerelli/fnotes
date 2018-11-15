@@ -19,12 +19,6 @@ public class NoteController {
     @Autowired
     NoteService noteService;
 
-    @GetMapping("/")
-    public String baseRedirect(){
-
-        return "/login";
-    }
-
     @GetMapping("/notes")
     public String showNotes(Model model){
         model.addAttribute("notes", noteService.getAllNotes());

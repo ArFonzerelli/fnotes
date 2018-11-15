@@ -9,12 +9,16 @@ import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.service.UserService;
 
 @Controller
-public class RegistrationController {
+public class AuthController {
 
     @Autowired
     UserService userService;
 
-
+    @GetMapping("/login_failed")
+    public String loginFailed(Model model){
+        model.addAttribute("message", "Вы ввели неверное имя пользователя или пароль.");
+        return "login";
+    }
 
     @GetMapping("/register")
     public String registration(){
