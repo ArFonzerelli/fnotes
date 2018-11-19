@@ -6,10 +6,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.stereotype.Component;
+import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.service.UserService;
 
-import javax.sql.DataSource;
 
 @Component
 @EnableWebSecurity
@@ -23,6 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/", "/register").permitAll()
+                    .antMatchers("/users/**").hasAuthority("ADMIN")
                     .anyRequest().authenticated()
                 .and()
                     .formLogin()
@@ -32,9 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureUrl("/login_failed")
                 .and()
                     .logout()
+                    .logoutSuccessUrl("/login")
+                    .deleteCookies("JSESSIONID", "SPRING_SECURITY_REMEMBER_ME_COOKIE")
+                    .invalidateHttpSession(true)
                     .permitAll();
-//                .and()
-//                    .csrf().disable();
     }
 
     @Override

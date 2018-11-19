@@ -5,11 +5,9 @@
     <title>FNotes</title>
 </head>
 <body>
-
+<a href="/users/all">Пользователи</a>
 <div>
-    <form action="/logout" method="post">
-        <input type="submit" value="Выход">
-    </form>
+    <a href="/logout">Выход</a>
 </div>
 
 <form method="post">

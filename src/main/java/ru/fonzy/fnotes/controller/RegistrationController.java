@@ -9,10 +9,11 @@ import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.service.UserService;
 
 @Controller
-public class AuthController {
+public class RegistrationController {
 
     @Autowired
     UserService userService;
+
 
     @GetMapping("/login_failed")
     public String loginFailed(Model model){
@@ -28,6 +29,8 @@ public class AuthController {
     @PostMapping("/register")
     public String register(User user, Model model){
         boolean result = userService.addUser(user);
+
+        System.out.println();
 
         if (!result) {
             model.addAttribute("message", "Такой пользователь уже существует");

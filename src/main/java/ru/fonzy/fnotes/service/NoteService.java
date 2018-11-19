@@ -2,11 +2,13 @@ package ru.fonzy.fnotes.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.repository.NoteRepository;
 
 @Service
+@Transactional
 public class NoteService {
 
     @Autowired
