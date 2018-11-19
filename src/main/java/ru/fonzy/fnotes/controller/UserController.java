@@ -31,7 +31,7 @@ public class UserController {
     @GetMapping("/delete_user")
     public String deleteUser(@RequestParam long id){
         boolean result = userService.deleteUserById(id);
-        return "redirect:/allUsers";
+        return "redirect:/users/all";
     }
 
     @GetMapping("/edit_user")
@@ -39,7 +39,7 @@ public class UserController {
         User user = userService.getUser(id);
 
         if (user == null)
-            return "redirect:/allUsers";
+            return "redirect:/users/all";
 
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
@@ -65,7 +65,7 @@ public class UserController {
 
         userService.updateUser(form.get("id"), form.get("username"), form.get("password"), enabled, userRoles);
 
-        return "redirect:/allUsers";
+        return "redirect:/users/all";
     }
 
 
