@@ -20,14 +20,23 @@ public class Note {
 
     private String text;
 
+    @Enumerated(EnumType.STRING)
+    private Importance importance;
+
+    @ManyToOne
+    @JoinColumn
+    private Category category;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User author;
 
-    public Note(String title, String text, User author) {
+    public Note(String title, String text, User author, Importance importance, Category category) {
         this.title = title;
         this.text = text;
         this.author = author;
+        this.importance = importance;
+        this.category = category;
     }
 
 }

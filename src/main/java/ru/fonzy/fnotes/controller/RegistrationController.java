@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.service.CategoryService;
 import ru.fonzy.fnotes.service.UserService;
 
 @Controller
@@ -13,6 +14,9 @@ public class RegistrationController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    CategoryService categoryService;
 
 
     @GetMapping("/login_failed")
