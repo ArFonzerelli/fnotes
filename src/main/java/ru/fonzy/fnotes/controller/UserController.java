@@ -25,7 +25,7 @@ public class UserController {
         Iterable<User> allUsers = userService.getAllUsers();
         model.addAttribute("users", allUsers);
 
-        return "allUsers";
+        return "users/allUsers";
     }
 
     @GetMapping("/delete_user")
@@ -44,7 +44,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
 
-        return "editUser";
+        return "users/editUser";
     }
 
     @PostMapping("/save_user")

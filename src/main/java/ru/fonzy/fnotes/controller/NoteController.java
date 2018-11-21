@@ -34,7 +34,7 @@ public class NoteController {
         model.addAttribute("notes", noteService.getNotesByAuthor(author));
         model.addAttribute("importances", Importance.values());
 
-        return "notes";
+        return "notes/notes";
     }
 
 

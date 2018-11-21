@@ -6,10 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
-import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.service.UserService;
 
 
@@ -24,11 +22,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                    .antMatchers("/", "/register").permitAll()
-                    .antMatchers("/**").permitAll()
-                    .antMatchers("/users/**").hasAuthority("ADMIN")
+                    .antMatchers("/", "/register").permitAll()
                     .antMatchers("/notes/**").authenticated()
-//                    .anyRequest().authenticated()
+                    .antMatchers("/users/**").hasAuthority("ADMIN")
                 .and()
                     .formLogin()
                     .loginPage("/login")
