@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.service.UserService;
@@ -23,21 +24,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/register").permitAll()
+//                    .antMatchers("/", "/register").permitAll()
+                    .antMatchers("/**").permitAll()
                     .antMatchers("/users/**").hasAuthority("ADMIN")
-                    .anyRequest().authenticated()
+                    .antMatchers("/notes/**").authenticated()
+//                    .anyRequest().authenticated()
                 .and()
                     .formLogin()
                     .loginPage("/login")
                     .permitAll()
                     .defaultSuccessUrl("/notes")
-                .failureUrl("/login_failed")
+                    .failureUrl("/login_failed")
                 .and()
                     .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login")
                     .deleteCookies("JSESSIONID", "SPRING_SECURITY_REMEMBER_ME_COOKIE")
-                    .invalidateHttpSession(true)
-                    .permitAll();
+                    .invalidateHttpSession(true);
     }
 
     @Override

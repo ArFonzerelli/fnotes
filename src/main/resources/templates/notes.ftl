@@ -1,12 +1,7 @@
 <#import "parts/common.ftl" as c>
 <@c.page>
 
-    <title>FNotes</title>
-
-<a href="/users/all">Пользователи</a>
-<div>
-    <a href="/logout">Выход</a>
-</div>
+    <title>Заметки</title>
 
 <form method="post">
     <div><input type="text" name="title" placeholder="Заголовок"></div>
