@@ -8,4 +8,8 @@ public enum Importance {
     public String toString() {
         return this.name();
     }
+
+    public boolean isNormal(){
+        return this.equals(Importance.NORMAL);
+    }
 }

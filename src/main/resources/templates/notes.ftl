@@ -15,7 +15,7 @@
     <div><input type="text" name="text" placeholder="Текст заметки"></div>
     <div><label>Важность: </label>
     <#list importances as importance>
-        <label><input type="radio" name="importance" value="${importance}">${importance}</label>
+        <label><input type="radio" name="importance" value="${importance}" ${importance.normal?string("checked", "")}>${importance}</label>
     </#list>
     </div>
     <div><label>Категория: </label><input type="text" name="category" placeholder="Обычные заметки"></div>

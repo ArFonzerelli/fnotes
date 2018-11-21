@@ -45,7 +45,6 @@ public class NoteController {
 
         String title = form.get("title");
         String text = form.get("text");
-        Importance importance = Importance.valueOf(form.get("importance"));
         String categoryStr = form.get("category");
 
         if (Strings.isNullOrEmpty(title))
@@ -58,6 +57,8 @@ public class NoteController {
             categoryStr = "Обычные заметки";
 
         Category category = categoryService.getCategoryOrCreateNew(categoryStr);
+
+        Importance importance = Importance.valueOf(form.get("importance"));
 
         noteService.createNote(title, text, author, importance, category);
 
