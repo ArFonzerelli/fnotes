@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<#import "parts/common.ftl" as c>
+<@c.page>
+
     <title>FNotes</title>
-</head>
-<body>
+
 <a href="/users/all">Пользователи</a>
 <div>
     <a href="/logout">Выход</a>
@@ -32,6 +30,4 @@
         <span>${note.text}</span>
     </div>
     </#list>
-
-</body>
-</html>
+</@c.page>
