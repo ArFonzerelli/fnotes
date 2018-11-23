@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.repository.UserRepository;
 
 import javax.annotation.PostConstruct;
@@ -34,19 +35,18 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean addUser(User user){
+    public boolean addUser(UserDto userDto){
 
-        User userInBase = userRepository.findByUsername(user.getUsername());
+        User userInBase = userRepository.findByUsername(userDto.getUsername());
 
         if (userInBase != null){
             return false;
         }
 
-        user.setEnabled(true);
-
         HashSet<Role> roles = new HashSet<>();
         roles.add(Role.USER);
-        user.setRoles(roles);
+
+        User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), true, roles);
 
         userRepository.save(user);
 

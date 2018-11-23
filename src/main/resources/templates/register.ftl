@@ -24,16 +24,20 @@
                         <div class="col-lg-12">
                             <form id="register-form" action="/register" method="post" role="form" style="display: block;">
                                 <div class="form-group">
+                                    <#if username_failed??><div class="error_msg">${username_failed}</div></#if>
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Логин" value="">
                                 </div>
                                 <div class="form-group">
+                                    <#if email_failed??><div class="error_msg">${email_failed}</div></#if>
                                     <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Почтовый адрес" value="">
                                 </div>
                                 <div class="form-group">
+                                    <#if passwordsMatch_failed??><div class="error_msg">${passwordsMatch_failed}</div></#if>
+                                    <#if password_failed??><div class="error_msg">${password_failed}</div></#if>
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Пароль">
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Повторите пароль">
+                                    <input type="password" name="confirmPassword" id="confirmPassword" tabindex="2" class="form-control" placeholder="Повторите пароль">
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
