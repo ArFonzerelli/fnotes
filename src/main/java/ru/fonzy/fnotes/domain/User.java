@@ -27,6 +27,8 @@ public class User implements UserDetails {
 
     private String password;
 
+    private String email;
+
     private boolean enabled;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -37,10 +39,11 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "author", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Note> notes;
 
-    public User(long id, String username, String password, boolean enabled, Set<Role> roles) {
+    public User(long id, String username, String password, String email, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.enabled = enabled;
         this.roles = roles;
     }

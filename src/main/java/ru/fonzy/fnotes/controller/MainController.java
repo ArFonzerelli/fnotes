@@ -12,8 +12,15 @@ public class MainController {
         return "redirect:/notes";
     }
 
-    @GetMapping
+    @GetMapping("/login")
     public String login(Model model){
         return "login";
     }
+
+    @GetMapping("/login_failed")
+    public String loginFailed(Model model){
+        model.addAttribute("message", "Вы ввели неверное имя пользователя или пароль.");
+        return "login";
+    }
+
 }
