@@ -6,19 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.fonzy.fnotes.domain.Category;
 import ru.fonzy.fnotes.domain.Importance;
 import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.dto.NoteDto;
+import ru.fonzy.fnotes.helpers.ErrorHelper;
 import ru.fonzy.fnotes.repository.CategoryRepository;
 import ru.fonzy.fnotes.service.CategoryService;
 import ru.fonzy.fnotes.service.NoteService;
+
+import javax.validation.Valid;
 import java.util.Map;
 
 @Controller
+@RequestMapping("notes")
 public class NoteController {
 
     @Autowired
@@ -27,42 +34,40 @@ public class NoteController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/notes")
+    @GetMapping
     public String showNotes(@AuthenticationPrincipal User author,
                             Model model){
 
         model.addAttribute("notes", noteService.getNotesByAuthor(author));
         model.addAttribute("importances", Importance.values());
 
-        return "/notes";
+        return "notes/notes_page";
+    }
+
+    @GetMapping("/addNote")
+    public String editNotePage(Model model){
+        model.addAttribute("importances", Importance.values());
+        return "notes/editNote";
+    }
+
+    @PostMapping("/submNote")
+    public String submitNote(@AuthenticationPrincipal User author,
+                             @Valid NoteDto noteDto,
+                             BindingResult bindingResult,
+                             Model model){
+
+        if (bindingResult.hasErrors()){
+            ErrorHelper.addErrors(bindingResult, model);
+
+            return "/notes/editNote";
+        }
+
+        noteService.createNote(noteDto, author);
+
+        return "redirect:/notes";
+
     }
 
 
-    @PostMapping("/notes")
-    public String addNote(
-            @AuthenticationPrincipal User author,
-            @RequestParam Map<String, String> form){
-
-        String title = form.get("title");
-        String text = form.get("text");
-        String categoryStr = form.get("category");
-
-        if (Strings.isNullOrEmpty(title))
-            title = "Пустой заголовок";
-
-        if (Strings.isNullOrEmpty(text))
-            text = "Пустой текст";
-
-        if (Strings.isNullOrEmpty(categoryStr))
-            categoryStr = "Обычные заметки";
-
-        Category category = categoryService.getCategoryOrCreateNew(categoryStr);
-
-        Importance importance = Importance.valueOf(form.get("importance"));
-
-        noteService.createNote(title, text, author, importance, category);
-
-        return "redirect:notes";
-    }
 
 }

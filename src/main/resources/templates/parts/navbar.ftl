@@ -1,25 +1,27 @@
 <#include "security.ftl">
 
 <#if logged_in>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/notes">FNotes</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/notes">Заметки</a>
-            </li>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/notes">FNotes</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/notes">Заметки</a></li>
             <#if isAdmin>
-            <li class="nav-item">
-                <a class="nav-link" href="/users/all">Пользователи</a>
-            </li>
+            <li><a class="nav-link" href="/users/all">Пользователи</a></li>
+            </#if>
+            <#if .main_template_name == "notes/notes_page.ftl">
+            <li><a class="nav-link" href="notes/addNote">Новая заметка</a></li>
+            </#if>
+            <#if .main_template_name == "users/allUsers.ftl">
+            <li><a class="nav-link" href="users/addUser">Новый пользователь</a></li>
             </#if>
         </ul>
-        <div class="navbar-text">Вы вошли как: ${username}</div>
-        <div><a class="nav-link" href="/logout">Выход</a>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">Вы вошли как: ${username}</li>
+            <li><a class="nav-link" href="/logout">Выход</a>
+        </ul>
     </div>
 </nav>
 </#if>

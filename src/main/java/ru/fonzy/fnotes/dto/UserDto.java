@@ -11,11 +11,13 @@ import javax.validation.constraints.*;
 public class UserDto {
 
     @NotNull
-    @Size(min = 3, max = 15, message = "Логин должен быть между 3 и 15 символами")
+    @Size(min = 3, message = "Минимальная длина пароля 3 символа")
+    @Size(max = 15, message = "Максимальная длина пароля 15 символов")
     private String username;
 
     @NotNull
-    @Size(min = 5, max = 20, message = "Длина пароля должна быть между 5 и 20 символами")
+    @Size(min = 5, message = "Минимальная длина пароля 5 символов")
+    @Size(max = 20, message = "Максимальная длина пароля 20 символов")
     private String password;
 
     private String confirmPassword;

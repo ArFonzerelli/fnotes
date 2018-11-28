@@ -1,8 +1,17 @@
 package ru.fonzy.fnotes.domain;
 
-public enum Importance {
-    VERY_HIGH, HIGH, NORMAL;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+public enum Importance {
+    VERY_HIGH("Очень высокая"), HIGH("Высокая"), NORMAL("Обычная");
+
+    private String translation;
+
+    Importance(String translation) {
+        this.translation = translation;
+    }
 
     @Override
     public String toString() {

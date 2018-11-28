@@ -7,6 +7,7 @@ import ru.fonzy.fnotes.domain.Category;
 import ru.fonzy.fnotes.domain.Importance;
 import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.dto.NoteDto;
 import ru.fonzy.fnotes.repository.NoteRepository;
 
 @Service
@@ -16,17 +17,21 @@ public class NoteService {
     @Autowired
     private NoteRepository noteRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     public Iterable<Note> getAllNotes(){
         return noteRepository.findAll();
     }
 
-
-    public void createNote(String title, String text, User author, Importance importance, Category category){
-        Note note = new Note(title, text, author, importance, category);
-        noteRepository.save(note);
-    }
-
     public Iterable<Note> getNotesByAuthor(User author) {
         return noteRepository.getAllByAuthor(author);
+    }
+
+    public void createNote(NoteDto noteDto, User author) {
+        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory());
+        Note note = new Note(noteDto.getTitle(), noteDto.getText(), author, Importance.valueOf(noteDto.getImportance()), category);
+
+        noteRepository.save(note);
     }
 }

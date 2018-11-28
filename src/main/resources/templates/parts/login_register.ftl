@@ -19,7 +19,6 @@
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
-<#--<script src="/static/js/login.js"></script>-->
 </body>
 </html>
 </#macro>

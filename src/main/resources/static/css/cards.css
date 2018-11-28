@@ -1,0 +1,49 @@
+.shape{
+    border-style: solid; border-width: 0 70px 40px 0; float:right; height: 0px; width: 0px;
+    -ms-transform:rotate(360deg);
+    -o-transform: rotate(360deg);
+    -webkit-transform:rotate(360deg);
+    transform:rotate(360deg);
+}
+
+a.shape-text{
+    color:#fff; font-size:21px; font-weight:bold; position:relative; right:-50px; top:1px; white-space: nowrap;
+}
+a.shape-text:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.note {
+    min-height:300px;
+}
+
+.note{
+    background:#fff; border:1px solid #ddd; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); margin: 15px 0; overflow:hidden;
+}
+
+.note-radius{
+    border-radius:7px;
+}
+
+.note-VERY_HIGH {    border-color: #d9534f; }
+.note-VERY_HIGH .shape{
+    border-color: transparent #d9534f transparent transparent;
+    border-color: rgba(255,255,255,0) #d9534f rgba(255,255,255,0) rgba(255,255,255,0);
+}
+
+.note-NORMAL {	border-color: #5cb85c; }
+.note-NORMAL .shape{
+    border-color: transparent #5cb85c transparent transparent;
+    border-color: rgba(255,255,255,0) #5cb85c rgba(255,255,255,0) rgba(255,255,255,0);
+}
+
+.note-HIGH {	border-color: #f0ad4e; }
+.note-HIGH .shape{
+    border-color: transparent #f0ad4e transparent transparent;
+    border-color: rgba(255,255,255,0) #f0ad4e rgba(255,255,255,0) rgba(255,255,255,0);
+}
+
+.note-content {
+    padding:0 20px 10px;
+}
