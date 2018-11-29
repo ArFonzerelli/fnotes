@@ -30,12 +30,30 @@ public class NoteService {
 
     public void createNote(NoteDto noteDto, User author) {
         Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory());
-        Note note = new Note(noteDto.getTitle(), noteDto.getText(), author, Importance.valueOf(noteDto.getImportance()), category);
+        Note note = new Note(noteDto.getTitle(), noteDto.getText(), Importance.valueOf(noteDto.getImportance()), category, author);
 
         noteRepository.save(note);
     }
 
-    public void deleteNote(int id) {
-        noteRepository.deleteById((long) id);
+    public void deleteNote(long id) {
+        noteRepository.deleteById(id);
+    }
+
+    public Note getNoteById(long id) {
+        return noteRepository.findById(id).orElse(null);
+    }
+
+    public void updateNote(NoteDto noteDto, User author) {
+        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory());
+
+        Note note = noteRepository.findById(noteDto.getId()).orElse(null);
+
+        note.setTitle(noteDto.getTitle());
+        note.setText(noteDto.getText());
+        note.setImportance(Importance.valueOf(noteDto.getImportance()));
+        note.setCategory(category);
+        note.setAuthor(author);
+
+        noteRepository.save(note);
     }
 }

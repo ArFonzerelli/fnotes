@@ -1,7 +1,7 @@
 <#import "../parts/common.ftl" as c>
 <@c.page>
 
-<link rel="stylesheet" type="text/css" href="/static/css/cards.css">
+<link rel="stylesheet" type="text/css" href="/static/css/cards.css" xmlns="http://www.w3.org/1999/html">
 
 <title>Заметки</title>
 
@@ -20,14 +20,16 @@
                         <input type="hidden" name="_csrf" value="${_csrf.token}">
                     </form>
                 </div>
+
                 <div class="note-content">
                     <h3 class="lead">
-                        ${note.title}
+                            ${note.title}
                     </h3>
                     <p>
                         ${note.text}
                     </p>
                 </div>
+                <a class="open-link" href="/notes/editNote?id=${note.id}">Открыть</a>
             </div>
         </div>
     </#list>

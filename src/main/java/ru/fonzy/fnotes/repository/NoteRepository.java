@@ -9,4 +9,6 @@ import ru.fonzy.fnotes.domain.User;
 public interface NoteRepository extends CrudRepository<Note, Long> {
 
     Iterable<Note> getAllByAuthor(User author);
+
+
 }

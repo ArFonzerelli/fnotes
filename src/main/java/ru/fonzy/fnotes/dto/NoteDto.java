@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class NoteDto {
 
+    private long id;
+
     private String title;
 
     @NotNull()
@@ -25,4 +27,11 @@ public class NoteDto {
 
     private String importance;
 
+    public NoteDto(long id, String title, String text, String category, String importance) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.category = category;
+        this.importance = importance;
+    }
 }

@@ -18,6 +18,12 @@ a.shape-text:hover{
     color:#fff; font-size:21px; font-weight:bold; position:relative; right:-50px; top:1px; white-space: nowrap;
 }
 
+.open-link{
+    position: absolute;
+    left: 110px;
+    bottom: 25px;
+}
+
 .note {
     min-height:300px;
 }

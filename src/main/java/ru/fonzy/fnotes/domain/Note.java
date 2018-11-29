@@ -1,6 +1,7 @@
 package ru.fonzy.fnotes.domain;
 
 import jdk.nashorn.internal.objects.annotations.Constructor;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +32,7 @@ public class Note {
     @JoinColumn(name = "user_id")
     private User author;
 
-    public Note(String title, String text, User author, Importance importance, Category category) {
+    public Note(String title, String text, Importance importance, Category category, User author) {
         this.title = title;
         this.text = text;
         this.author = author;

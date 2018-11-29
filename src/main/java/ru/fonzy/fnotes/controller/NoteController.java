@@ -37,20 +37,53 @@ public class NoteController {
     }
 
     @GetMapping("/addNote")
-    public String editNotePage(Model model){
+    public String addNote(Model model){
         model.addAttribute("importances", Importance.values());
+        return "notes/newNote";
+    }
+
+    @GetMapping("/editNote")
+    public String editNote(@RequestParam long id, Model model){
+        Note note = noteService.getNoteById(id);
+
+        if (note == null)
+            return "redirect:/notes";
+
+        NoteDto noteDto = new NoteDto(note.getId(), note.getTitle(), note.getText(), note.getCategory().toString(), note.getImportance().toString());
+
+        model.addAttribute("note", noteDto);
+        model.addAttribute("importances", Importance.values());
+
         return "notes/editNote";
     }
 
     @PostMapping("/deleteNote")
-    public String deleteNote(@RequestParam int id){
+    public String deleteNote(@RequestParam long id){
         noteService.deleteNote(id);
 
         return "redirect:/notes";
     }
 
-    @PostMapping("/submNote")
-    public String submitNote(@AuthenticationPrincipal User author,
+    @PostMapping("/createNote")
+    public String createNote(@AuthenticationPrincipal User author,
+                             @Valid NoteDto noteDto,
+                             BindingResult bindingResult,
+                             Model model){
+
+        if (bindingResult.hasErrors()){
+            ErrorHelper.addErrors(bindingResult, model);
+
+            return "/notes/newNote";
+        }
+
+        noteService.createNote(noteDto, author);
+
+        return "redirect:/notes";
+
+    }
+
+    @PostMapping("/updateNote")
+    public String updateNote(@AuthenticationPrincipal User author,
                              @Valid NoteDto noteDto,
                              BindingResult bindingResult,
                              Model model){
@@ -61,7 +94,7 @@ public class NoteController {
             return "/notes/editNote";
         }
 
-        noteService.createNote(noteDto, author);
+        noteService.updateNote(noteDto, author);
 
         return "redirect:/notes";
 
