@@ -14,6 +14,10 @@ a.shape-text:hover{
     text-decoration: none;
 }
 
+.delete-btn{
+    color:#fff; font-size:21px; font-weight:bold; position:relative; right:-50px; top:1px; white-space: nowrap;
+}
+
 .note {
     min-height:300px;
 }

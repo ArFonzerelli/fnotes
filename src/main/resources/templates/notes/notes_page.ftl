@@ -12,7 +12,13 @@
         <div class="col-xs-3">
             <div class="note note-${note.importance}">
                 <div class="shape">
-                    <a class="shape-text" href="/delete">X</a>
+                    <form action="/notes/deleteNote" method="post">
+                        <label class="delete-btn">X
+                            <input type="hidden" id="id" name="id" value="${note.id}">
+                            <button type="submit" hidden></button>
+                        </label>
+                        <input type="hidden" name="_csrf" value="${_csrf.token}">
+                    </form>
                 </div>
                 <div class="note-content">
                     <h3 class="lead">
