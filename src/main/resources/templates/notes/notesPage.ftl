@@ -12,7 +12,7 @@
         <div class="col-xs-3">
             <div class="note note-${note.importance}">
                 <div class="shape">
-                    <form action="/notes/deleteNote" method="post">
+                    <form action="/notes/delete" method="post">
                         <label class="delete-btn">X
                             <input type="hidden" id="id" name="id" value="${note.id}">
                             <button type="submit" hidden></button>
@@ -29,7 +29,7 @@
                         ${note.text}
                     </p>
                 </div>
-                <a class="open-link" href="/notes/editNote?id=${note.id}">Открыть</a>
+                <a class="open-link" href="/notes/edit?id=${note.id}">Открыть</a>
             </div>
         </div>
     </#list>

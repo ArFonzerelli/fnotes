@@ -14,15 +14,25 @@ import ru.fonzy.fnotes.repository.NoteRepository;
 @Transactional
 public class NoteService {
 
-    @Autowired
     private NoteRepository noteRepository;
 
-    @Autowired
     private CategoryService categoryService;
 
-    public Iterable<Note> getAllNotes(){
-        return noteRepository.findAll();
+    @Autowired
+    public void setNoteRepository(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+
+    public Note getNoteById(long id) {
+        return noteRepository.findById(id).orElse(null);
+    }
+
 
     public Iterable<Note> getNotesByAuthor(User author) {
         return noteRepository.getAllByAuthor(author);
@@ -33,14 +43,6 @@ public class NoteService {
         Note note = new Note(noteDto.getTitle(), noteDto.getText(), Importance.valueOf(noteDto.getImportance()), category, author);
 
         noteRepository.save(note);
-    }
-
-    public void deleteNote(long id) {
-        noteRepository.deleteById(id);
-    }
-
-    public Note getNoteById(long id) {
-        return noteRepository.findById(id).orElse(null);
     }
 
     public void updateNote(NoteDto noteDto, User author) {
@@ -55,5 +57,9 @@ public class NoteService {
         note.setAuthor(author);
 
         noteRepository.save(note);
+    }
+
+    public void deleteNote(long id) {
+        noteRepository.deleteById(id);
     }
 }

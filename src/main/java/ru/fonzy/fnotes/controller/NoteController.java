@@ -20,51 +20,39 @@ import javax.validation.Valid;
 @RequestMapping("notes")
 public class NoteController {
 
-    @Autowired
-    NoteService noteService;
+    private NoteService noteService;
+
+    private CategoryService categoryService;
 
     @Autowired
-    CategoryService categoryService;
+    public void setNoteService(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
-    @GetMapping
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
+
+    @GetMapping("/all")
     public String showNotes(@AuthenticationPrincipal User author,
                             Model model){
 
         model.addAttribute("notes", noteService.getNotesByAuthor(author));
         model.addAttribute("importances", Importance.values());
 
-        return "notes/notes_page";
+        return "notes/notesPage";
     }
 
-    @GetMapping("/addNote")
+    @GetMapping("/new")
     public String addNote(Model model){
         model.addAttribute("importances", Importance.values());
+
         return "notes/newNote";
     }
 
-    @GetMapping("/editNote")
-    public String editNote(@RequestParam long id, Model model){
-        Note note = noteService.getNoteById(id);
-
-        if (note == null)
-            return "redirect:/notes";
-
-        NoteDto noteDto = new NoteDto(note.getId(), note.getTitle(), note.getText(), note.getCategory().toString(), note.getImportance().toString());
-
-        model.addAttribute("note", noteDto);
-        model.addAttribute("importances", Importance.values());
-
-        return "notes/editNote";
-    }
-
-    @PostMapping("/deleteNote")
-    public String deleteNote(@RequestParam long id){
-        noteService.deleteNote(id);
-
-        return "redirect:/notes";
-    }
-
-    @PostMapping("/createNote")
+    @PostMapping("/create")
     public String createNote(@AuthenticationPrincipal User author,
                              @Valid NoteDto noteDto,
                              BindingResult bindingResult,
@@ -82,7 +70,22 @@ public class NoteController {
 
     }
 
-    @PostMapping("/updateNote")
+    @GetMapping("/edit")
+    public String editNote(@RequestParam long id, Model model){
+        Note note = noteService.getNoteById(id);
+
+        if (note == null)
+            return "redirect:/notes";
+
+        NoteDto noteDto = new NoteDto(note.getId(), note.getTitle(), note.getText(), note.getCategory().toString(), note.getImportance().toString());
+
+        model.addAttribute("note", noteDto);
+        model.addAttribute("importances", Importance.values());
+
+        return "notes/editNote";
+    }
+
+    @PostMapping("/update")
     public String updateNote(@AuthenticationPrincipal User author,
                              @Valid NoteDto noteDto,
                              BindingResult bindingResult,
@@ -97,9 +100,13 @@ public class NoteController {
         noteService.updateNote(noteDto, author);
 
         return "redirect:/notes";
-
     }
 
+    @PostMapping("/delete")
+    public String deleteNote(@RequestParam long id){
+        noteService.deleteNote(id);
 
+        return "redirect:/notes";
+    }
 
 }

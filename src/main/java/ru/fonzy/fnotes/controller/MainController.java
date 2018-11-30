@@ -9,7 +9,7 @@ public class MainController {
 
     @GetMapping("/")
     public String baseRedirect(){
-        return "redirect:/notes";
+        return "redirect:/notes/all";
     }
 
     @GetMapping("/login")

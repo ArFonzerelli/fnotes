@@ -16,7 +16,7 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="note-form" action="/notes/createNote" method="post" role="form" style="display: block;">
+                            <form id="note-form" action="/notes/create" method="post" role="form" style="display: block;">
                                 <div class="form-group">
                                     <input type="text" name="title" id="title" tabindex="1" class="form-control" placeholder="Заголовок" value="">
                                 </div>
