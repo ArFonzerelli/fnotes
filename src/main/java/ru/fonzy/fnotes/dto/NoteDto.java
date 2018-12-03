@@ -1,9 +1,6 @@
 package ru.fonzy.fnotes.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.fonzy.fnotes.domain.Category;
 
 import javax.validation.constraints.NotNull;
@@ -12,6 +9,7 @@ import javax.validation.constraints.Size;
 
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class NoteDto {
 
     private long id;
@@ -27,11 +25,11 @@ public class NoteDto {
 
     private String importance;
 
-    public NoteDto(long id, String title, String text, String category, String importance) {
-        this.id = id;
-        this.title = title;
-        this.text = text;
-        this.category = category;
-        this.importance = importance;
-    }
+//    public NoteDto(long id, String title, String text, String category, String importance) {
+//        this.id = id;
+//        this.title = title;
+//        this.text = text;
+//        this.category = category;
+//        this.importance = importance;
+//    }
 }

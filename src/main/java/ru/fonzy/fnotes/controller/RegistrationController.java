@@ -4,34 +4,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
-import ru.fonzy.fnotes.service.CategoryService;
 import ru.fonzy.fnotes.service.UserService;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 public class RegistrationController {
 
-    @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    CategoryService categoryService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
 
     @GetMapping("/register")
     public String registration(){
-        return "/register";
+        return "/users/register";
     }
 
     @PostMapping("/register")
@@ -40,14 +34,14 @@ public class RegistrationController {
                            Model model){
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
-            return "/register";
+            return "/users/register";
         }
 
         boolean result = userService.addUser(userDto);
 
         if (!result) {
             model.addAttribute("user_exists", "Такой логин уже существует");
-            return "/register";
+            return "/users/register";
         }
 
         return "redirect:/login";

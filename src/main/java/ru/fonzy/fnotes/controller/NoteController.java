@@ -11,7 +11,6 @@ import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.NoteDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
-import ru.fonzy.fnotes.service.CategoryService;
 import ru.fonzy.fnotes.service.NoteService;
 
 import javax.validation.Valid;
@@ -22,16 +21,9 @@ public class NoteController {
 
     private NoteService noteService;
 
-    private CategoryService categoryService;
-
     @Autowired
     public void setNoteService(NoteService noteService) {
         this.noteService = noteService;
-    }
-
-    @Autowired
-    public void setCategoryService(CategoryService categoryService) {
-        this.categoryService = categoryService;
     }
 
 
@@ -46,7 +38,7 @@ public class NoteController {
     }
 
     @GetMapping("/new")
-    public String addNote(Model model){
+    public String newNote(Model model){
         model.addAttribute("importances", Importance.values());
 
         return "notes/newNote";
@@ -61,21 +53,27 @@ public class NoteController {
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
 
+            model.addAttribute("importances", Importance.values());
             return "/notes/newNote";
         }
 
         noteService.createNote(noteDto, author);
 
-        return "redirect:/notes";
+        return "redirect:/notes/all";
 
     }
 
     @GetMapping("/edit")
-    public String editNote(@RequestParam long id, Model model){
+    public String editNote(@AuthenticationPrincipal User user,
+                           @RequestParam long id,
+                           Model model){
         Note note = noteService.getNoteById(id);
 
         if (note == null)
-            return "redirect:/notes";
+            return "redirect:/notes/all";
+
+        if(!note.getAuthor().getId().equals(user.getId()))
+            return "redirect:/notes/all";
 
         NoteDto noteDto = new NoteDto(note.getId(), note.getTitle(), note.getText(), note.getCategory().toString(), note.getImportance().toString());
 
@@ -99,14 +97,16 @@ public class NoteController {
 
         noteService.updateNote(noteDto, author);
 
-        return "redirect:/notes";
+        return "redirect:/notes/all";
     }
 
     @PostMapping("/delete")
-    public String deleteNote(@RequestParam long id){
+    public String deleteNote(@AuthenticationPrincipal User user,
+                             @RequestParam long id){
+
         noteService.deleteNote(id);
 
-        return "redirect:/notes";
+        return "redirect:/notes/all";
     }
 
 }
