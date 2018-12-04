@@ -109,6 +109,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
     }
 
+    @Override
+    public void manage(long id, boolean enabled, Set<Role> userRoles) {
+        User user = userRepository.findById(id).orElse(null);
 
+        user.setEnabled(enabled);
+        user.setRoles(userRoles);
 
+        userRepository.save(user);
+    }
 }

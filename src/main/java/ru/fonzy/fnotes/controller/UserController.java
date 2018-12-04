@@ -44,35 +44,34 @@ public class UserController {
         return "redirect:/users/all";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/manage")
     public String editUser(@RequestParam long id, Model model){
         User user = userService.getUser(id);
 
         if (user == null)
             return "redirect:/users/all";
 
-        UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.getEmail(), user.isEnabled(), user.getRoles());
+        UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.isEnabled(), user.getRoles());
 
         model.addAttribute("user", userDto);
         model.addAttribute("roles", Role.values());
 
-        return "users/editUser";
+        return "users/manageUser";
     }
 
-    @PostMapping("/save")
-    public String saveUser(@Valid UserDto userDto,
-                           BindingResult bindingResult,
-                           @RequestParam Map<String, String> form,
+    @PostMapping("/manage")
+    public String manageUser(@RequestParam Map<String, String> form,
                            Model model){
 
-        System.out.println();
+        long id = Long.parseLong(form.get("id"));
 
-        if (bindingResult.hasErrors()){
-            ErrorHelper.addErrors(bindingResult, model);
+        if (form.containsKey("remove")) {
+            userService.deleteUserById(id);
 
-            return "/users/editUser";
+            return "redirect:/users/all";
         }
 
+        boolean enabled = form.get("enabled").equals("on");
 
         Role[] allRoles = Role.values();
         Set<Role> userRoles = new HashSet<>();
@@ -82,9 +81,7 @@ public class UserController {
                 if (role.toString().equals(formParam.getKey()))
                     userRoles.add(role);
 
-        userDto.setRoles(userRoles);
-
-        userService.updateUser(userDto);
+        userService.manage(id, enabled, userRoles);
 
         return "redirect:/users/all";
     }

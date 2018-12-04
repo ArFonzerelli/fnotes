@@ -14,8 +14,6 @@
                 <th>Почтовый адрес</th>
                 <th>Активен</th>
                 <th>Роли</th>
-                <th>Редактировать</th>
-                <th>Удалить</th>
             </tr>
             </thead>
         <#list users as user>
@@ -24,8 +22,7 @@
                 <td><#if user.email??>${user.email}</#if></td>
                 <td>${user.enabled?string('Да', 'Нет')}</td>
                 <td><#list user.roles as role>${role}<#sep>, </#list></td>
-                <td><a href="/users/edit?id=${user.id}">Редактировать</a></td>
-                <td><div><a href="/users/delete?id=${user.id}">Удалить</a></div></td>
+                <td><a href="/users/manage?id=${user.id}">Управлять</a></td>
             </tr>
         </#list>
         </table>

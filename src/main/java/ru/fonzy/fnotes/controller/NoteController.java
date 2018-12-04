@@ -91,6 +91,8 @@ public class NoteController {
 
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
+            model.addAttribute("note", noteDto);
+            model.addAttribute("importances", Importance.values());
 
             return "/notes/editNote";
         }

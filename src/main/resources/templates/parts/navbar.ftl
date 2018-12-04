@@ -16,9 +16,6 @@
             <#if .main_template_name == "notes/notesPage.ftl">
             <li><a class="nav-link" href="/notes/new">Новая заметка</a></li>
             </#if>
-            <#if .main_template_name == "users/allUsers.ftl">
-            <li><a class="nav-link" href="/users/new">Новый пользователь</a></li>
-            </#if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="navbar-text">Вы вошли как: ${username}</li>

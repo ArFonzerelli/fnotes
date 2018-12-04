@@ -26,4 +26,5 @@ public interface UserService {
 
     void updateUser(UserDto userDto);
 
+    void manage(long id, boolean enabled, Set<Role> userRoles);
 }

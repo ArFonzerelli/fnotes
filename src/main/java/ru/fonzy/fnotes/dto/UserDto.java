@@ -35,10 +35,9 @@ public class UserDto {
 
     private Set<Role> roles;
 
-    public UserDto(long id, String username, String email, boolean enabled, Set<Role> roles) {
+    public UserDto(long id, String username, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.username = username;
-        this.email = email;
         this.enabled = enabled;
         this.roles = roles;
     }
