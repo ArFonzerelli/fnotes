@@ -11,6 +11,7 @@
             <thead>
             <tr>
                 <th>Имя пользователя</th>
+                <th>Почтовый адрес</th>
                 <th>Активен</th>
                 <th>Роли</th>
                 <th>Редактировать</th>
@@ -20,6 +21,7 @@
         <#list users as user>
             <tr>
                 <td>${user.username}</td>
+                <td><#if user.email??>${user.email}</#if></td>
                 <td>${user.enabled?string('Да', 'Нет')}</td>
                 <td><#list user.roles as role>${role}<#sep>, </#list></td>
                 <td><a href="/users/edit?id=${user.id}">Редактировать</a></td>
