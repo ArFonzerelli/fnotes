@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 
 import java.util.Set;
@@ -27,4 +28,8 @@ public interface UserService {
     void updateUser(UserDto userDto);
 
     void manage(long id, boolean enabled, Set<Role> userRoles);
+
+    boolean checkPassword(long id, String password);
+
+    void updateUserProfile(ProfileDto profileDto);
 }

@@ -15,6 +15,7 @@ public class ErrorHelper {
         for (ObjectError error : errors){
             String field = ((FieldError) error).getField();
             model.addAttribute(field.concat("_failed"), error.getDefaultMessage());
+            System.out.println(field.concat("failed"));
         }
     }
 }

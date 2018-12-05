@@ -1,11 +1,10 @@
 package ru.fonzy.fnotes.dto;
 
+import com.google.common.base.Strings;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.fonzy.fnotes.service.UserService;
 
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
@@ -13,11 +12,9 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProfileDto {
-
-    private UserService userService;
 
     private long id;
 
@@ -30,23 +27,22 @@ public class ProfileDto {
 
     @Size(min = 5, message = "Минимальная длина пароля 5 символов")
     @Size(max = 20, message = "Максимальная длина пароля 20 символов")
-    private String newPassword;
+    private String password;
 
-    private String newPasswordConfirm;
+    private String confirmPassword;
 
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public ProfileDto(long id, String username, String email) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
     }
 
-    @AssertTrue(message = "Новые пароли не совпадают")
+    @AssertTrue(message = "Пароли не совпадают")
     private boolean isPasswordsMatch(){
-        return this.newPassword.equals(this.newPasswordConfirm);
+        if (Strings.isNullOrEmpty(this.password))
+            return true;
+
+        return this.password.equals(this.confirmPassword);
     }
 
-    @AssertTrue(message = "Старый пароль неверный")
-    private boolean isOldPasswordCorrect(){
-        return userService.checkPassword(oldPassword);
-    }
 }

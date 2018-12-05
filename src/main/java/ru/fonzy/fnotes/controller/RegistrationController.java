@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.domain.User;
+import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
 import ru.fonzy.fnotes.service.UserService;
+import sun.plugin.util.UserProfile;
 
 import javax.validation.Valid;
 
@@ -59,15 +61,36 @@ public class RegistrationController {
         if (user == null || currentUser.getId() != id)
             return "redirect:/notes/all";
 
-        UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.isEnabled(), user.getRoles());
+        ProfileDto profileDto = new ProfileDto(user.getId(), user.getUsername(), user.getEmail());
 
-        model.addAttribute("user", userDto);
+        model.addAttribute("userProfile", profileDto);
 
         return "/users/profile";
     }
 
     @PostMapping("/profile/update")
-    public String updateProfile(){
-        return "";
+    public String updateProfile(@Valid ProfileDto profileDto,
+                                BindingResult bindingResult,
+                                Model model){
+        System.out.println();
+        if (bindingResult.hasErrors()){
+            ErrorHelper.addErrors(bindingResult, model);
+            model.addAttribute("userProfile", profileDto);
+            System.out.println("error");
+
+            return "/users/profile";
+        }
+
+        if (!userService.checkPassword(profileDto.getId(), profileDto.getOldPassword())){
+            model.addAttribute("oldPasswordCorrect_failed", "Вы ввели неверный старый пароль");
+            model.addAttribute("userProfile", profileDto);
+
+            return "/users/profile";
+        }
+
+        userService.updateUserProfile(profileDto);
+
+        return "redirect:/notes/all";
+
     }
 }

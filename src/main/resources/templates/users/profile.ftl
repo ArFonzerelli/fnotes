@@ -4,7 +4,7 @@
 <link rel="stylesheet" type="text/css" href="/static/css/editUser.css">
 
 
-<title>${user.username}</title>
+<title>Профиль: ${userProfile.username}</title>
 
 
 <div class="container">
@@ -17,25 +17,27 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <form id="user-form" action="/profile/update" method="post" role="form" style="display: block;">
-                                <input type="hidden" name="id" value="${user.id}"/>
+                                <input type="hidden" name="id" value="${userProfile.id}"/>
+                                <input type="hidden" name="username" value="${userProfile.username}"/>
                                 <div class="username">
-                                    <label class="username">${user.username}</label>
+                                    <label class="username">${userProfile.username}</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="username" class="usr-label">Почтовый адрес:</label>
                                         <#if email_failed??><div class="error_msg">${email_failed}</div></#if>
-                                    <input type="text" name="email" id="email" tabindex="2" class="form-control" placeholder="<#if user.email??>${user.email}<#else>Почтовый адрес</#if>" value="<#if user.email??>${user.email}</#if>"/>
+                                    <input type="text" name="email" id="email" tabindex="2" class="form-control" placeholder="<#if userProfile.email??>${userProfile.email}<#else>Почтовый адрес</#if>" value="<#if userProfile.email??>${userProfile.email}</#if>"/>
                                 </div>
                                 <div class="username">
                                     <label class="changepass">Смена пароля</label>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="usr-label">Старый пароль:</label>
-                                        <#if password_failed??><div class="error_msg">${password_failed}</div></#if>
-                                    <input type="password" name="oldpassword" id="oldpassword" tabindex="2" placeholder="Пароль" class="form-control"/>
+                                        <#if oldPasswordCorrect_failed??><div class="error_msg">${oldPasswordCorrect_failed}</div></#if>
+                                    <input type="password" name="oldPassword" id="oldPassword" tabindex="2" placeholder="Пароль" class="form-control"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="usr-label">Новый пароль:</label>
+                                        <#if passwordsMatch_failed??><div class="error_msg">${passwordsMatch_failed}</div></#if>
                                         <#if password_failed??><div class="error_msg">${password_failed}</div></#if>
                                         <input type="password" name="password" id="password" tabindex="2" placeholder="Пароль" class="form-control"/>
                                 </div>

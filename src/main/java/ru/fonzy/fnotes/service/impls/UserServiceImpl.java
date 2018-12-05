@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.NoteDto;
+import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.repository.UserRepository;
 import ru.fonzy.fnotes.service.UserService;
@@ -111,10 +112,29 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void manage(long id, boolean enabled, Set<Role> userRoles) {
-        User user = userRepository.findById(id).orElse(null);
+        User user = getUser(id);
 
         user.setEnabled(enabled);
         user.setRoles(userRoles);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public boolean checkPassword(long id, String password) {
+        User user = getUser(id);
+
+        return user.getPassword().equals(password);
+    }
+
+    @Override
+    public void updateUserProfile(ProfileDto profileDto) {
+        User user = getUser(profileDto.getId());
+
+        user.setEmail(profileDto.getEmail());
+
+        if (!Strings.isNullOrEmpty(profileDto.getPassword()))
+            user.setPassword(profileDto.getPassword());
 
         userRepository.save(user);
     }
