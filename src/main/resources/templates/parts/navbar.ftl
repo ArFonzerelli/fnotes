@@ -18,8 +18,8 @@
             </#if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text">Вы вошли как: ${username}</li>
-            <li><a class="nav-link" href="/logout">Выход</a>
+            <li><a class="nav-link" href="/profile?id=${user.id}">Профиль</a></li>
+            <li><a href="/logout">Выход</a></li>
         </ul>
     </div>
 </nav>

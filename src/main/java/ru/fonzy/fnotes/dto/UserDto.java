@@ -17,8 +17,8 @@ public class UserDto {
     private long id;
 
     @NotNull
-    @Size(min = 3, message = "Минимальная длина пароля 3 символа")
-    @Size(max = 15, message = "Максимальная длина пароля 15 символов")
+    @Size(min = 3, message = "Минимальная длина логина 3 символа")
+    @Size(max = 15, message = "Максимальная длина логина 15 символов")
     private String username;
 
     @NotNull

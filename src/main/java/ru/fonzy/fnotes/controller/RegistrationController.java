@@ -1,11 +1,15 @@
 package ru.fonzy.fnotes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.fonzy.fnotes.domain.Role;
+import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
 import ru.fonzy.fnotes.service.UserService;
@@ -45,5 +49,25 @@ public class RegistrationController {
         }
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile")
+    public String openProfile(@AuthenticationPrincipal User currentUser,
+                              @RequestParam long id, Model model){
+        User user = userService.getUser(id);
+
+        if (user == null || currentUser.getId() != id)
+            return "redirect:/notes/all";
+
+        UserDto userDto = new UserDto(user.getId(), user.getUsername(), user.isEnabled(), user.getRoles());
+
+        model.addAttribute("user", userDto);
+
+        return "/users/profile";
+    }
+
+    @PostMapping("/profile/update")
+    public String updateProfile(){
+        return "";
     }
 }

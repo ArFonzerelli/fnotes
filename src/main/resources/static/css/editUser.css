@@ -63,6 +63,15 @@
     border-color: #1CA347;
 }
 
+.username{
+    text-align: center;
+    font-size: large;
+}
+.changepass{
+    text-align: center;
+    font-weight: lighter;
+}
+
 .error_msg{
     color: #ff0000
 }

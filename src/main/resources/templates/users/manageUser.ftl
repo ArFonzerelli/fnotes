@@ -18,8 +18,8 @@
                         <div class="col-lg-12">
                             <form id="user-form" action="/users/manage" method="post" role="form" style="display: block;">
                                 <input type="hidden" name="id" value="${user.id}"/>
-                                <div class="form-group">
-                                    <label>Логин: ${user.username}</label>
+                                <div class="username">
+                                    <label class="username">${user.username}</label>
                                 </div>
                                 <div class="form-group">
                                     <label  class="usr-label">Активен:

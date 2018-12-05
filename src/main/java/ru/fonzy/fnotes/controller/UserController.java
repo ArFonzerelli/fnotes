@@ -36,14 +36,7 @@ public class UserController {
 
         return "users/allUsers";
     }
-
-    @GetMapping("/delete")
-    public String deleteUser(@RequestParam long id){
-        boolean result = userService.deleteUserById(id);
-
-        return "redirect:/users/all";
-    }
-
+    
     @GetMapping("/manage")
     public String editUser(@RequestParam long id, Model model){
         User user = userService.getUser(id);
