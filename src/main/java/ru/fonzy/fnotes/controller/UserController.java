@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("users")
 public class UserController {
 
     private UserService userService;
@@ -36,7 +36,7 @@ public class UserController {
 
         return "users/allUsers";
     }
-    
+
     @GetMapping("/manage")
     public String editUser(@RequestParam long id, Model model){
         User user = userService.getUser(id);

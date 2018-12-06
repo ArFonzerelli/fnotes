@@ -18,7 +18,7 @@
             </#if>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li><a class="nav-link" href="/profile?id=${user.id}">Профиль</a></li>
+            <li><a class="nav-link" href="/profile/?id=${user.id}">Профиль</a></li>
             <li><a href="/logout">Выход</a></li>
         </ul>
     </div>

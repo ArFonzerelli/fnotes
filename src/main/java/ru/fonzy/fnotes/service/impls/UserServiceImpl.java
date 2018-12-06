@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.fonzy.fnotes.domain.Role;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.NoteDto;
+import ru.fonzy.fnotes.dto.PasswordDto;
 import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.repository.UserRepository;
@@ -133,9 +134,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         user.setEmail(profileDto.getEmail());
 
-        if (!Strings.isNullOrEmpty(profileDto.getPassword()))
-            user.setPassword(profileDto.getPassword());
-
         userRepository.save(user);
+    }
+
+    @Override
+    public void updateUserPassword(PasswordDto passwordDto) {
+        User user = getUser(passwordDto.getId());
+
+        if (!Strings.isNullOrEmpty(passwordDto.getPassword()))
+            user.setPassword(passwordDto.getPassword());
     }
 }

@@ -53,44 +53,4 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
-    @GetMapping("/profile")
-    public String openProfile(@AuthenticationPrincipal User currentUser,
-                              @RequestParam long id, Model model){
-        User user = userService.getUser(id);
-
-        if (user == null || currentUser.getId() != id)
-            return "redirect:/notes/all";
-
-        ProfileDto profileDto = new ProfileDto(user.getId(), user.getUsername(), user.getEmail());
-
-        model.addAttribute("userProfile", profileDto);
-
-        return "/users/profile";
-    }
-
-    @PostMapping("/profile/update")
-    public String updateProfile(@Valid ProfileDto profileDto,
-                                BindingResult bindingResult,
-                                Model model){
-        System.out.println();
-        if (bindingResult.hasErrors()){
-            ErrorHelper.addErrors(bindingResult, model);
-            model.addAttribute("userProfile", profileDto);
-            System.out.println("error");
-
-            return "/users/profile";
-        }
-
-        if (!userService.checkPassword(profileDto.getId(), profileDto.getOldPassword())){
-            model.addAttribute("oldPasswordCorrect_failed", "Вы ввели неверный старый пароль");
-            model.addAttribute("userProfile", profileDto);
-
-            return "/users/profile";
-        }
-
-        userService.updateUserProfile(profileDto);
-
-        return "redirect:/notes/all";
-
-    }
 }

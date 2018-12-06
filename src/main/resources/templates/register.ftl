@@ -1,4 +1,4 @@
-<#import "../parts/login_register.ftl" as l>
+<#import "parts/login_register.ftl" as l>
 
 <@l.login_register_page>
 
