@@ -68,12 +68,13 @@
     font-size: large;
 }
 
-.changepass{
-    text-align: center;
-    font-weight: lighter;
-}
 
 .error_msg{
     color: #ff0000
+}
+
+.changepass-link{
+    padding-top: 15px;
+    text-align: left;
 }
 

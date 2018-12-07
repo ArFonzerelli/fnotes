@@ -1,7 +1,7 @@
 <#import "../parts/common.ftl" as c>
 <@c.page>
 
-<link rel="stylesheet" type="text/css" href="/static/css/editNote.css">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
 
 <title>${note.title}</title>

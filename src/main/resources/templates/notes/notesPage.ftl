@@ -1,7 +1,8 @@
 <#import "../parts/common.ftl" as c>
 <@c.page>
 
-<link rel="stylesheet" type="text/css" href="/static/css/cards.css" xmlns="http://www.w3.org/1999/html">
+<#--<link rel="stylesheet" type="text/css" href="/static/css/cards.css" xmlns="http://www.w3.org/1999/html">-->
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
 <title>Заметки</title>
 

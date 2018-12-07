@@ -45,6 +45,7 @@
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="text-center">
+                                                <#--todo-->
                                                 <a href="https://google.com/" tabindex="5" class="forgot-password">Забыли пароль?</a>
                                             </div>
                                         </div>

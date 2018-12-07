@@ -1,6 +1,7 @@
 <#include "security.ftl">
 
-<link rel="stylesheet" type="text/css" href="/static/css/navbar.css">
+<#--<link rel="stylesheet" type="text/css" href="/static/css/navbar.css">-->
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
 <#if logged_in>
 <nav class="navbar navbar-default">

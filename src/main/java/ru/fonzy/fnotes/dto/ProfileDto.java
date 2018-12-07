@@ -14,6 +14,7 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+//todo Попробовать сделать с наследованием
 public class ProfileDto {
 
     private long id;

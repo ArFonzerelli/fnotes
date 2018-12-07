@@ -31,7 +31,7 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public String registration(){
-        return "/users/register";
+        return "/register";
     }
 
     @PostMapping("/register")
@@ -40,14 +40,14 @@ public class RegistrationController {
                            Model model){
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
-            return "/users/register";
+            return "/register";
         }
 
         boolean result = userService.addUser(userDto);
 
         if (!result) {
             model.addAttribute("user_exists", "Такой логин уже существует");
-            return "/users/register";
+            return "/register";
         }
 
         return "redirect:/login";

@@ -1,8 +1,8 @@
 <#import "../parts/common.ftl" as c>
 <@c.page>
 
-<link rel="stylesheet" type="text/css" href="/static/css/editUser.css">
-
+<#--<link rel="stylesheet" type="text/css" href="/static/css/editUser.css">-->
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
 <title>Новый пользователь</title>
 
