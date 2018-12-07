@@ -8,6 +8,7 @@
 
 <hr>
 <div class="container">
+    <#if notes??>
     <#list notes as note>
 
         <div class="col-xs-3">
@@ -34,7 +35,9 @@
             </div>
         </div>
     </#list>
-
+        <#elseif no_notes??>
+            <div class="title"><label>${no_notes}</label></div>
+    </#if>
 </div>
 
 </@c.page>

@@ -13,7 +13,7 @@
             <div class="panel panel">
                 <div class="panel-heading">
                     <div>
-                        <label class="username">${user.username}</label>
+                        <label class="title">${user.username}</label>
                     </div>
                 </div>
                 <div class="panel-body">

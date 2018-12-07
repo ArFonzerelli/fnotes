@@ -1,5 +1,6 @@
 package ru.fonzy.fnotes.controller;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import ru.fonzy.fnotes.helpers.ErrorHelper;
 import ru.fonzy.fnotes.service.NoteService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("notes")
@@ -31,7 +34,13 @@ public class NoteController {
     public String showNotes(@AuthenticationPrincipal User author,
                             Model model){
 
-        model.addAttribute("notes", noteService.getNotesByAuthor(author));
+        List<Note> notes = Lists.newArrayList(noteService.getNotesByAuthor(author));
+
+        if (notes.size() == 0)
+            model.addAttribute("no_notes", "У вас пока нет ни одной заметки");
+        else
+            model.addAttribute("notes", notes);
+
         model.addAttribute("importances", Importance.values());
 
         return "notes/notesPage";

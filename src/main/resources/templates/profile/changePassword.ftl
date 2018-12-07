@@ -12,7 +12,7 @@
             <div class="panel panel-user">
                 <div class="panel-heading">
                     <div class="username">
-                        <label class="username">Смена пароля</label>
+                        <label class="title">Смена пароля</label>
                     </div>
                 </div>
                     <div class="panel-body">
