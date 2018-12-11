@@ -1,13 +1,28 @@
+<#include "../parts/variables.ftl">
 <#import "../parts/common.ftl" as c>
 <@c.page>
 
-<#--<link rel="stylesheet" type="text/css" href="/static/css/cards.css" xmlns="http://www.w3.org/1999/html">-->
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
 
 <title>Заметки</title>
 
 <hr>
-<div class="container">
+    <div class="col-md-2">
+        <h3>Категории</h3>
+        <div role="tabpanel">
+                <ul class="nav nav-pills brand-pills nav-stacked" role="tablist">
+                    <li role="presentation" class="brand-nav <#if current_url == "/notes/all">active</#if>"><a href="/notes/all">Все заметки</a></li>
+                    <#if categories??>
+                        <#list categories as category>
+                            <li role="presentation" class="brand-nav <#if current_url == "/notes/category/${category.id}">active</#if>"><a href="/notes/category/${category.id}">${category}</a></li>
+                        </#list>
+                    </#if>
+                </ul>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+
     <#if notes??>
     <#list notes as note>
 
@@ -38,7 +53,8 @@
         <#elseif no_notes??>
             <div class="title"><label>${no_notes}</label></div>
     </#if>
-</div>
+
+    </div>
 
 </@c.page>
 

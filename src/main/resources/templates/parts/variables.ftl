@@ -1,4 +1,5 @@
 <#assign    logged_in = Session.SPRING_SECURITY_CONTEXT??>
+<#assign    current_url = springMacroRequestContext.getRequestUri()>
 
 <#if logged_in>
     <#assign

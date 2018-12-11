@@ -1,21 +1,21 @@
 package ru.fonzy.fnotes.controller;
 
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.fonzy.fnotes.domain.Category;
 import ru.fonzy.fnotes.domain.Importance;
 import ru.fonzy.fnotes.domain.Note;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.dto.NoteDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
+import ru.fonzy.fnotes.service.CategoryService;
 import ru.fonzy.fnotes.service.NoteService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -24,26 +24,55 @@ public class NoteController {
 
     private NoteService noteService;
 
+    private CategoryService categoryService;
+
     @Autowired
     public void setNoteService(NoteService noteService) {
         this.noteService = noteService;
     }
 
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/all")
     public String showNotes(@AuthenticationPrincipal User author,
                             Model model){
-
-        List<Note> notes = Lists.newArrayList(noteService.getNotesByAuthor(author));
+        List<Note> notes = noteService.getNotes(author);
+        List<Category> categories = categoryService.getCategories(author);
 
         if (notes.size() == 0)
             model.addAttribute("no_notes", "У вас пока нет ни одной заметки");
         else
             model.addAttribute("notes", notes);
 
+        model.addAttribute("categories", categories);
+
         model.addAttribute("importances", Importance.values());
 
         return "notes/notesPage";
+    }
+
+    @GetMapping("/category/{id}")
+    public String showNotesWithCategory(@AuthenticationPrincipal User author,
+                                        @PathVariable long id,
+                                        Model model){
+//      todo
+        Category category = categoryService.getCategory(id, author);
+
+        List<Category> categories = categoryService.getCategories(author);
+
+        List<Note> notes = noteService.getNotes(author, category);
+
+        model.addAttribute("notes", notes);
+
+        model.addAttribute("categories", categories);
+
+        model.addAttribute("importances", Importance.values());
+
+        return "notes/notesPage";
+
     }
 
     @GetMapping("/new")

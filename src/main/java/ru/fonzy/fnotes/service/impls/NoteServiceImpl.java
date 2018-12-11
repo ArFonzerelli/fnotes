@@ -11,6 +11,8 @@ import ru.fonzy.fnotes.dto.NoteDto;
 import ru.fonzy.fnotes.repository.NoteRepository;
 import ru.fonzy.fnotes.service.NoteService;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class NoteServiceImpl implements NoteService {
@@ -29,27 +31,35 @@ public class NoteServiceImpl implements NoteService {
         this.categoryService = categoryService;
     }
 
-
+    @Override
     public Note getNoteById(long id) {
         return noteRepository.findById(id).orElse(null);
     }
 
-    public Iterable<Note> getNotesByAuthor(User author) {
+    @Override
+    public List<Note> getNotes(User author) {
         return noteRepository.getAllByAuthor(author);
     }
 
+    @Override
+    public List<Note> getNotes(User author, Category category) {
+        return noteRepository.getAllByAuthorAndCategory(author, category);
+    }
+
+    @Override
     public void createNote(NoteDto noteDto, User author) {
-        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory());
+        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory(), author);
         Note note = new Note(noteDto.getTitle(), noteDto.getText(), Importance.valueOf(noteDto.getImportance()), category, author);
 
         noteRepository.save(note);
     }
 
     //todo сделать через запрос?
+    @Override
     public void updateNote(NoteDto noteDto, User author) {
         Note note = getNoteById(noteDto.getId());
 
-        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory());
+        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory(), author);
 
         note.setTitle(noteDto.getTitle());
         note.setText(noteDto.getText());

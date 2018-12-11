@@ -1,4 +1,4 @@
-<#include "security.ftl">
+<#include "variables.ftl">
 
 <#--<link rel="stylesheet" type="text/css" href="/static/css/navbar.css">-->
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
@@ -12,10 +12,10 @@
         <ul class="nav navbar-nav">
             <li><a class="nav-link" href="/notes/all">Заметки</a></li>
             <#if isAdmin>
-            <li><a class="nav-link" href="/users/all">Пользователи</a></li>
+                <li><a class="nav-link" href="/users/all">Пользователи</a></li>
             </#if>
-            <#if .main_template_name == "notes/notesPage.ftl">
-            <li><a class="nav-link" href="/notes/new">Новая заметка</a></li>
+            <#if current_url == "notes/notesPage.ftl">
+                <li><a class="nav-link" href="/notes/new">Новая заметка</a></li>
             </#if>
         </ul>
         <ul class="nav navbar-nav navbar-right">

@@ -21,8 +21,13 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Note> notes;
 
-    public Category(String name) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
+    public Category(String name, User author) {
         this.name = name;
+        this.author = author;
     }
 
     @Override

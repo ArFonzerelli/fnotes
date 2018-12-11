@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
+    @Override
     public boolean addUser(UserDto userDto){
 
         User userInBase = userRepository.findByUsername(userDto.getUsername());
@@ -63,10 +64,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
+    @Override
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
 
+    @Override
     public boolean deleteUserById(long id) {
         if (id == 1)
             return false;
@@ -76,6 +79,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return true;
     }
 
+    @Override
     public User getUser(long id) {
         return userRepository.findById(id).orElse(null);
     }
@@ -95,6 +99,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 //        userRepository.save(user);
 //    }
 
+    @Override
     public void updateUser(UserDto userDto){
         User user = userRepository.findById(userDto.getId()).orElse(null);
 
