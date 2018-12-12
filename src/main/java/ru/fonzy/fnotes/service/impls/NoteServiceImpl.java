@@ -59,7 +59,7 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.save(note);
     }
 
-    //todo сделать через запрос?
+
     @Override
     public void updateNote(NoteDto noteDto, User author) {
         Note note = getNoteById(noteDto.getId());
@@ -75,6 +75,7 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.save(note);
     }
 
+    //todo Сделать удаление категорий если нет заметок, либо добавление категорий
     public void deleteNote(long id) {
         noteRepository.deleteById(id);
     }

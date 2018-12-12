@@ -14,7 +14,7 @@
             <#if isAdmin>
                 <li><a class="nav-link" href="/users/all">Пользователи</a></li>
             </#if>
-            <#if current_url == "notes/**">
+            <#if .main_template_name == "notes/notesPage.ftl">
                 <li><a class="nav-link" href="/notes/new">Новая заметка</a></li>
             </#if>
         </ul>

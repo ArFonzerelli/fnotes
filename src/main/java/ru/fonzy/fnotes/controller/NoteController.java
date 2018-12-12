@@ -65,7 +65,10 @@ public class NoteController {
 
         List<Note> notes = noteService.getNotes(author, category);
 
-        model.addAttribute("notes", notes);
+        if (notes.size() == 0)
+            model.addAttribute("no_notes", "Не найдено заметок в данной категории");
+        else
+            model.addAttribute("notes", notes);
 
         model.addAttribute("categories", categories);
 
