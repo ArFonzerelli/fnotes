@@ -47,6 +47,11 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public List<Note> findNotes(User author, String query) {
+        return noteRepository.getAllByAuthorAndTitleContainingOrTextContaining(author, query, query);
+    }
+
+    @Override
     public void createNote(NoteDto noteDto, User author) {
         Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory(), author);
         Note note = new Note(noteDto.getTitle(), noteDto.getText(), Importance.valueOf(noteDto.getImportance()), category, author);

@@ -1,5 +1,6 @@
 package ru.fonzy.fnotes.repository;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import ru.fonzy.fnotes.domain.Category;
@@ -14,4 +15,7 @@ public interface NoteRepository extends CrudRepository<Note, Long> {
     List<Note> getAllByAuthor(User author);
 
     List<Note> getAllByAuthorAndCategory(User author, Category category);
+
+    List<Note> getAllByAuthorAndTitleContainingOrTextContaining(User author, String title, String text);
+
 }

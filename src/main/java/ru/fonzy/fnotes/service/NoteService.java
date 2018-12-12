@@ -19,12 +19,12 @@ public interface NoteService {
 
     List<Note> getNotes(User author, Category category);
 
+    List<Note> findNotes(User author, String query);
+
     void createNote(NoteDto noteDto, User author);
 
     void updateNote(NoteDto noteDto, User author);
 
     void deleteNote(long id);
-
-
 
 }
