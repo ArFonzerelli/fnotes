@@ -16,26 +16,18 @@ public class MyMessageDao {
     @Resource(lookup = "jdbc/MyDs")
     private DataSource ds;
 
-    public int insertMessages(long requestId, List<Message> messages) throws SQLException {
-        Connection con = null;
-        try {
-            con = ds.getConnection();
+    public int insertMessages(long requestId, List<Message> messages) {
+        try (Connection con = ds.getConnection()) {
+            con.setAutoCommit(false);
             lock(con, requestId);
             changeRequestStatus(con, requestId);
             insertMessages(con, requestId, messages);
             unlock(con, requestId);
             con.commit();
             return 0;
-        } catch (LockException e) {
-            if (con != null)
-                con.rollback();
-
+        } catch (SQLException | LockException e) {
             log.error("Error. " + requestId + ", " + messages, e);
             return 1;
-        }
-        finally {
-            if (con!= null)
-                con.close();
         }
     }
 
