@@ -75,7 +75,7 @@ public class NoteServiceImpl implements NoteService {
         noteRepository.save(note);
     }
 
-    //todo Сделать удаление категорий если нет заметок, либо добавление категорий.
+    //todo Сделать удаление категорий если нет заметок, либо добавление категорий
     public void deleteNote(long id) {
         noteRepository.deleteById(id);
     }
