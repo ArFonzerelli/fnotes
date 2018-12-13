@@ -8,11 +8,11 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 public class MyMessageDao {
+
     @Resource(lookup = "jdbc/MyDs")
     private DataSource ds;
 
@@ -22,7 +22,6 @@ public class MyMessageDao {
             lock(con, requestId);
             changeRequestStatus(con, requestId);
             insertMessages(con, requestId, messages);
-            unlock(con, requestId);
             con.commit();
             return 0;
         } catch (SQLException | LockException e) {
@@ -40,6 +39,7 @@ public class MyMessageDao {
             if (result != 0) {
                 throw new LockException("Can't lock registry with id=" + requestId);
             }
+            con.commit();
         }
     }
 
@@ -52,6 +52,9 @@ public class MyMessageDao {
                 ps.setString(2, msg.getMessage());
                 ps.executeUpdate();
             }
+        }
+        finally {
+            unlock(con, requestId);
         }
     }
 
