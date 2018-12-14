@@ -17,6 +17,7 @@
                             <li role="presentation" class="brand-nav <#if current_url == "/notes/category/${category.id}">active</#if>"><a href="/notes/category/${category.id}">${category}</a></li>
                         </#list>
                     </#if>
+                    <li><a class="edit-category" href="/categories/edit">Редактировать категории</a></li>
                 </ul>
         </div>
     </div>

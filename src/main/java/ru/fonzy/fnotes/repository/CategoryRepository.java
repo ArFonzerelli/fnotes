@@ -14,5 +14,4 @@ public interface CategoryRepository extends CrudRepository<Category, Long> {
 
     List<Category> getAllByAuthor(User author);
 
-
 }

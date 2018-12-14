@@ -54,6 +54,27 @@ public class NoteController {
         return "notes/notesPage";
     }
 
+    @GetMapping("/search")
+    public String search(@AuthenticationPrincipal User author,
+                         @RequestParam String query,
+                         Model model){
+
+        List<Note> notes = noteService.findNotes(author, query);
+        List<Category> categories = categoryService.getCategories(author);
+
+        if (notes.size() == 0)
+            model.addAttribute("no_notes", "К сожалению, ничего не найдено");
+        else
+            model.addAttribute("notes", notes);
+
+        model.addAttribute("categories", categories);
+
+        model.addAttribute("importances", Importance.values());
+
+        return "notes/notesPage";
+    }
+
+
     @GetMapping("/category/{id}")
     public String showNotesWithCategory(@AuthenticationPrincipal User author,
                                         @PathVariable long id,
@@ -76,26 +97,6 @@ public class NoteController {
 
         return "notes/notesPage";
 
-    }
-
-    @GetMapping("/search")
-    public String search(@AuthenticationPrincipal User author,
-                         @RequestParam String query,
-                         Model model){
-
-        List<Note> notes = noteService.findNotes(author, query);
-        List<Category> categories = categoryService.getCategories(author);
-
-        if (notes.size() == 0)
-            model.addAttribute("no_notes", "К сожалению, ничего не найдено");
-        else
-            model.addAttribute("notes", notes);
-
-        model.addAttribute("categories", categories);
-
-        model.addAttribute("importances", Importance.values());
-
-        return "notes/notesPage";
     }
 
     @GetMapping("/new")
