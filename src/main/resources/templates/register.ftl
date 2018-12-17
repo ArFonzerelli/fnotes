@@ -25,10 +25,12 @@
                             <form id="register-form" action="/register" method="post" role="form" style="display: block;">
                                 <div class="form-group">
                                     <#if username_failed??><div class="error_msg">${username_failed}</div></#if>
+                                    <#if username_exists??><div class="error_msg">${username_exists}</div></#if>
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Логин" value="">
                                 </div>
                                 <div class="form-group">
                                     <#if email_failed??><div class="error_msg">${email_failed}</div></#if>
+                                    <#if email_exists??><div class="error_msg">${email_exists}</div></#if>
                                     <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Почтовый адрес" value="">
                                 </div>
                                 <div class="form-group">

@@ -28,6 +28,7 @@ public class User implements UserDetails {
     private String password;
 
     private String email;
+    private String activationCode;
 
     private boolean enabled;
 
@@ -48,10 +49,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(String username, String password, String email, boolean enabled, Set<Role> roles) {
+    public User(String username, String password, String email,String activationCode, boolean enabled, Set<Role> roles) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.activationCode = activationCode;
         this.enabled = enabled;
         this.roles = roles;
     }

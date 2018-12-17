@@ -23,7 +23,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <form id="login-form" action="/login" method="post" role="form" style="display: block;">
-                                <#if message??><div class="error_msg">${message}</div> </#if>
+                                <#if ok_msg??><div class="ok_msg">${ok_msg}</div> </#if>
+                                <#if error_msg??><div class="error_msg">${error_msg}</div> </#if>
                                 <div class="form-group">
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Логин" value="">
                                 </div>

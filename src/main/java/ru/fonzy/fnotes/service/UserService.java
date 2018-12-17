@@ -10,6 +10,7 @@ import ru.fonzy.fnotes.dto.PasswordDto;
 import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -35,4 +36,8 @@ public interface UserService {
     void updateUserProfile(ProfileDto profileDto);
 
     void updateUserPassword(PasswordDto passwordDto);
+
+    boolean activateUser(String code);
+
+    Map<String,String> checkUserExists(UserDto userDto);
 }

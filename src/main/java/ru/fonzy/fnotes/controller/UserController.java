@@ -58,13 +58,16 @@ public class UserController {
 
         long id = Long.parseLong(form.get("id"));
 
+        boolean enabled = false;
+
         if (form.containsKey("remove")) {
             userService.deleteUserById(id);
 
             return "redirect:/users/all";
         }
 
-        boolean enabled = form.get("enabled").equals("on");
+        if (form.containsKey("enabled"))
+            enabled = form.get("enabled").equals("on");
 
         Role[] allRoles = Role.values();
         Set<Role> userRoles = new HashSet<>();

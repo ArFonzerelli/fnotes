@@ -2,6 +2,7 @@ package ru.fonzy.fnotes.service.impls;
 
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,25 +16,32 @@ import ru.fonzy.fnotes.dto.PasswordDto;
 import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.repository.UserRepository;
+import ru.fonzy.fnotes.service.MailSender;
 import ru.fonzy.fnotes.service.UserService;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
+    @Value("${hostaddress}")
+    private String hostAddress;
+
     private UserRepository userRepository;
+
+    private MailSender mailSender;
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    @Autowired
+    public void setMailSender(MailSender mailSender) {
+        this.mailSender = mailSender;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,18 +54,50 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public Map<String, String> checkUserExists(UserDto userDto) {
+        Map <String, String> userExistsErrors = new HashMap<>();
+        User usernameCheck = userRepository.findByUsername(userDto.getUsername());
+        User emailCheck = userRepository.findByEmail(userDto.getEmail());
+
+        if (usernameCheck != null)
+            userExistsErrors.put("username_exists", "Пользователь с таким логином уже существует");
+
+        if (emailCheck != null)
+            userExistsErrors.put("email_exists", "Такой почтовый адрес уже существвет");
+
+        return userExistsErrors;
+
+    }
+
+    @Override
     public boolean addUser(UserDto userDto){
-
-        User userInBase = userRepository.findByUsername(userDto.getUsername());
-
-        if (userInBase != null){
-            return false;
-        }
-
         HashSet<Role> roles = new HashSet<>();
         roles.add(Role.USER);
 
-        User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), true, roles);
+        User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), UUID.randomUUID().toString(), false, roles);
+
+        String subject = "Подтвердите email";
+        String text = String.format("Здравсвуйте, %s! \n" +
+                        "Для подтверждения вашего email перейдите пожалуйста по ссылке:" + hostAddress + "/activate/%s",
+                user.getUsername(), user.getActivationCode());
+
+        mailSender.send(user.getEmail(), subject, text);
+
+        userRepository.save(user);
+
+        return true;
+    }
+
+    @Override
+    public boolean activateUser(String code) {
+        User user = userRepository.findByActivationCode(code);
+
+        if (user == null)
+            return false;
+
+        user.setActivationCode(null);
+
+        user.setEnabled(true);
 
         userRepository.save(user);
 
@@ -83,21 +123,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUser(long id) {
         return userRepository.findById(id).orElse(null);
     }
-
-//    public void updateUser(String id, String userName, String password, boolean enabled, Set<Role> userRoles){
-//        User user = userRepository.findById(Long.valueOf(id)).orElse(null);
-//
-//        user.setUsername(userName);
-//
-//        if (!password.equals(""))
-//            user.setPassword(password);
-//
-//        user.setEnabled(enabled);
-//
-//        user.setRoles(userRoles);
-//
-//        userRepository.save(user);
-//    }
 
     @Override
     public void updateUser(UserDto userDto){

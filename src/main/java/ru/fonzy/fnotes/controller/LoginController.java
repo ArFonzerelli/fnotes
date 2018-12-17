@@ -19,7 +19,7 @@ public class LoginController {
 
     @GetMapping("/login_failed")
     public String loginFailed(Model model){
-        model.addAttribute("message", "Вы ввели неверное имя пользователя или пароль.");
+        model.addAttribute("error_msg", "Вы ввели неверное имя пользователя/пароль или Ваша учетная запись не активна.");
         return "login";
     }
 
