@@ -18,16 +18,18 @@
                 <li><a class="nav-link" href="/notes/new">Новая заметка</a></li>
             </#if>
         </ul>
+        <#if .main_template_name == "notes/notesPage.ftl">
         <div class="col-sm-3 col-md-3">
             <form class="navbar-form" role="search" method="get" action="/notes/search">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Поиск" name="query">
+                    <input type="text" class="form-control" placeholder="Поиск заметок..." name="query">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                     </div>
                 </div>
             </form>
         </div>
+        </#if>
         <ul class="nav navbar-nav navbar-right">
             <li><a class="nav-link" href="/profile/?id=${user.id}">Профиль</a></li>
             <li><a href="/logout">Выход</a></li>

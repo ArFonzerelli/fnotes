@@ -83,7 +83,7 @@ public class CategoryServiceImpl implements CategoryService {
 
         List<Note> notes = category.getNotes();
 
-        if (notes == null){
+        if (notes != null){
             for (Note note : notes){
                 note.setCategory(getCategoryOrCreateNew("Без категории", author));
             }

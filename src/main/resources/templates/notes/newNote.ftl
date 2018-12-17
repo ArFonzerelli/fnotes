@@ -26,7 +26,7 @@
                                     <textarea rows="10" name="text" id="text" class="form-control note-textarea" placeholder="Заметка..."></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" name="category" id="category" tabindex="2" class="form-control" placeholder="Обычная заметка" value="Обычная заметка">
+                                    <input type="text" name="category" id="category" tabindex="2" class="form-control" placeholder="Укажите категорию заметки" value="Без категории">
                                 </div>
                                 <div class="form-group">
                                     <div class="importance">
