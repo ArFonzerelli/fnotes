@@ -77,8 +77,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), UUID.randomUUID().toString(), false, roles);
 
         String subject = "Подтвердите email";
-        String text = String.format("Здравсвуйте, %s! \n" +
-                        "Для подтверждения вашего email перейдите пожалуйста по ссылке:" + hostAddress + "/activate/%s",
+        String text = String.format("Здравствуйте, %s! \n" +
+                        "Для подтверждения вашего email перейдите пожалуйста по ссылке: " + hostAddress + "/activate/%s",
                 user.getUsername(), user.getActivationCode());
 
         mailSender.send(user.getEmail(), subject, text);
