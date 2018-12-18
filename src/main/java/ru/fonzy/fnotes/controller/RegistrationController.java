@@ -1,6 +1,7 @@
 package ru.fonzy.fnotes.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,7 +49,13 @@ public class RegistrationController {
             return "/register";
         }
 
-        userService.addUser(userDto);
+        try {
+            userService.addUser(userDto);
+        }
+        catch (MailSendException e){
+            e.printStackTrace();
+            return "redirect:/send_email_failed";
+        }
 
         return "redirect:/email_confirm";
     }
@@ -58,11 +65,14 @@ public class RegistrationController {
         return "email_confirm";
     }
 
+    @GetMapping("/send_email_failed")
+    public String sendEmailFailedPage(){
+        return "send_email_failed";
+    }
+
     @GetMapping("/activate/{code}")
     public String activate(@PathVariable String code, Model model){
         boolean isActivated = userService.activateUser(code);
-
-        System.out.println(isActivated);
 
         if (isActivated)
             model.addAttribute("ok_msg", "Вы успешно подтвердили свой Email. Пожалуйста, авторизуйтесь.");

@@ -1,11 +1,14 @@
 package ru.fonzy.fnotes.service.impls;
 
 import com.google.common.base.Strings;
+import com.sun.mail.smtp.SMTPSendFailedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailSendException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +36,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private MailSender mailSender;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -41,6 +46,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -70,22 +80,37 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean addUser(UserDto userDto){
+    public void addUser(UserDto userDto) throws MailSendException{
+        String username = userDto.getUsername();
+        String password = passwordEncoder.encode(userDto.getPassword());
+        String email = userDto.getEmail();
+        String activationCode = UUID.randomUUID().toString();
+
         HashSet<Role> roles = new HashSet<>();
         roles.add(Role.USER);
 
-        User user = new User(userDto.getUsername(), userDto.getPassword(), userDto.getEmail(), UUID.randomUUID().toString(), false, roles);
+        try {
+            sendActivationEmail(email, username, activationCode);
+        }
+        catch (MailSendException e){
+            activationCode = null;
 
+            throw e;
+        }
+        finally {
+            User user = new User(username, password, email, activationCode, false, roles);
+            userRepository.save(user);
+        }
+    }
+
+    private void sendActivationEmail(String email, String username, String activationCode) throws MailSendException{
         String subject = "Подтвердите email";
         String text = String.format("Здравствуйте, %s! \n" +
                         "Для подтверждения вашего email перейдите пожалуйста по ссылке: " + hostAddress + "/activate/%s",
-                user.getUsername(), user.getActivationCode());
+                username, activationCode);
 
-        mailSender.send(user.getEmail(), subject, text);
+        mailSender.send(email, subject, text);
 
-        userRepository.save(user);
-
-        return true;
     }
 
     @Override

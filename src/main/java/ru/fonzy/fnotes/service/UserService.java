@@ -19,7 +19,7 @@ public interface UserService {
 
     UserDetails loadUserByUsername(String username);
 
-    boolean addUser(UserDto userDto);
+    void addUser(UserDto userDto);
 
     Iterable<User> getAllUsers();
 
