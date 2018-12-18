@@ -53,7 +53,13 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public void createNote(NoteDto noteDto, User author) {
-        Category category = categoryService.getCategoryOrCreateNew(noteDto.getCategory(), author);
+        Category category;
+
+        if (noteDto.getCategory() != null)
+            category = categoryService.getCategoryOrCreateNew(noteDto.getCategory(), author);
+        else
+            category = categoryService.getCategoryOrCreateNew("Без категории", author);
+
         Note note = new Note(noteDto.getTitle(), noteDto.getText(), Importance.valueOf(noteDto.getImportance()), category, author);
 
         noteRepository.save(note);

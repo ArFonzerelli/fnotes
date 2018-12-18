@@ -180,7 +180,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean checkPassword(long id, String password) {
         User user = getUser(id);
 
-        return user.getPassword().equals(password);
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     @Override
@@ -196,7 +196,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void updateUserPassword(PasswordDto passwordDto) {
         User user = getUser(passwordDto.getId());
 
+        String password = passwordDto.getPassword();
+
         if (!Strings.isNullOrEmpty(passwordDto.getPassword()))
-            user.setPassword(passwordDto.getPassword());
+            user.setPassword(passwordEncoder.encode(password));
     }
 }
