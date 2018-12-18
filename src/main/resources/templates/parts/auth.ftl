@@ -1,4 +1,4 @@
-<#macro login_register_page>
+<#macro auth_pages>
 <!DOCTYPE html>
 <html lang="en">
 <head>

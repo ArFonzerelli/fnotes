@@ -14,13 +14,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String login(Model model){
-        return "login";
+        return "auth/login";
     }
 
     @GetMapping("/login_failed")
     public String loginFailed(Model model){
         model.addAttribute("error_msg", "Вы ввели неверное имя пользователя/пароль или Ваша учетная запись не активна.");
-        return "login";
+        return "auth/login";
     }
 
 }

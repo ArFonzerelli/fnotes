@@ -1,9 +1,10 @@
-<#import "parts/login_register.ftl" as l>
+<#import "../parts/auth.ftl" as a
+>
 
-<@l.login_register_page>
+<@a.auth_pages>
 <div class="container"><h3>Вы успешно зарегистрировались. Ссылка для активации учетной записи отправлена Вам на почту</h3>
     <a href="/login">На страницу авторизации</a>
 </div>
 
 
-</@l.login_register_page>
+</@a.auth_pages>

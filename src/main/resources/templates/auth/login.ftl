@@ -1,6 +1,6 @@
-<#import "parts/login_register.ftl" as l>
+<#import "../parts/auth.ftl" as a>
 
-<@l.login_register_page>
+<@a.auth_pages>
 
 <title>Авторизация</title>
 
@@ -62,5 +62,5 @@
     </div>
 </div>
 
-</@l.login_register_page>
+</@a.auth_pages>
 

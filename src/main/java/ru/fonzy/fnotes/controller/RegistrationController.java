@@ -28,7 +28,7 @@ public class RegistrationController {
 
     @GetMapping("/register")
     public String registration(){
-        return "/register";
+        return "auth/register";
     }
 
     @PostMapping("/register")
@@ -37,7 +37,7 @@ public class RegistrationController {
                            Model model){
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
-            return "/register";
+            return "auth/register";
         }
 
         Map<String, String> userExistsErrors = userService.checkUserExists(userDto);
@@ -46,7 +46,7 @@ public class RegistrationController {
             for (Map.Entry<String, String> entry : userExistsErrors.entrySet())
                 model.addAttribute(entry.getKey(), entry.getValue());
 
-            return "/register";
+            return "auth/register";
         }
 
         try {
@@ -62,12 +62,12 @@ public class RegistrationController {
 
     @GetMapping("/email_confirm")
     public String emailConfirmPage(){
-        return "email_confirm";
+        return "auth/email_confirm";
     }
 
     @GetMapping("/send_email_failed")
     public String sendEmailFailedPage(){
-        return "send_email_failed";
+        return "auth/send_email_failed";
     }
 
     @GetMapping("/activate/{code}")
@@ -80,7 +80,7 @@ public class RegistrationController {
         else
             model.addAttribute("error_msg", "Данный код активации не найден.");
 
-        return "login";
+        return "auth/login";
     }
 
 }
