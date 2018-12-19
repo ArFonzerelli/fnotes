@@ -55,11 +55,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .failureUrl("/login_failed")
                 .and()
                     .rememberMe()
+                    .rememberMeParameter("remember-me")
+                    .key("REYH3467BfDSFG")
                 .and()
                     .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                     .logoutSuccessUrl("/login")
-                    .deleteCookies("JSESSIONID", "SPRING_SECURITY_REMEMBER_ME_COOKIE")
+                    .deleteCookies("JSESSIONID", "SESSION", "SPRING_SECURITY_REMEMBER_ME_COOKIE")
                     .invalidateHttpSession(true);
     }
 

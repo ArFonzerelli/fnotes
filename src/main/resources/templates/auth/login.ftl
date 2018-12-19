@@ -32,8 +32,8 @@
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Пароль">
                                 </div>
                                 <div class="form-group text-center">
-                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                                    <label for="remember"> Запомнить</label>
+                                    <input type="checkbox" tabindex="3" class="" name="remember-me">
+                                    <label for="remember">Запомнить</label>
                                 </div>
                                 <div class="form-group">
                                     <div class="row">
