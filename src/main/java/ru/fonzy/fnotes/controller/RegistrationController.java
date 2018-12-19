@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.helpers.ErrorHelper;
+import ru.fonzy.fnotes.service.ActivationService;
 import ru.fonzy.fnotes.service.UserService;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -20,11 +22,17 @@ public class RegistrationController {
 
     private UserService userService;
 
+    private ActivationService activationService;
+
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+    @Autowired
+    public void setActivationService(ActivationService activationService) {
+        this.activationService = activationService;
+    }
 
     @GetMapping("/register")
     public String registration(){
@@ -49,13 +57,13 @@ public class RegistrationController {
             return "auth/register";
         }
 
-        try {
-            userService.addUser(userDto);
-        }
-        catch (MailSendException e){
-            e.printStackTrace();
+        String activationCode = activationService.getActivationCode();
+        userService.addUserRegistered(userDto, activationCode);
+
+        boolean activationEmailSent = activationService.sendActivationEmail(userDto.getEmail(), userDto.getUsername(), activationCode);
+
+        if (!activationEmailSent)
             return "redirect:/send_email_failed";
-        }
 
         return "redirect:/email_confirm";
     }
@@ -72,7 +80,7 @@ public class RegistrationController {
 
     @GetMapping("/activate/{code}")
     public String activate(@PathVariable String code, Model model){
-        boolean isActivated = userService.activateUser(code);
+        boolean isActivated = activationService.activateUserByActivationCode(code);
 
         if (isActivated)
             model.addAttribute("ok_msg", "Вы успешно подтвердили свой Email. Пожалуйста, авторизуйтесь.");

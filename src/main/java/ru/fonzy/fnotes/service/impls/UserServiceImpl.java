@@ -19,6 +19,7 @@ import ru.fonzy.fnotes.dto.PasswordDto;
 import ru.fonzy.fnotes.dto.ProfileDto;
 import ru.fonzy.fnotes.dto.UserDto;
 import ru.fonzy.fnotes.repository.UserRepository;
+import ru.fonzy.fnotes.service.ActivationService;
 import ru.fonzy.fnotes.service.MailSender;
 import ru.fonzy.fnotes.service.UserService;
 
@@ -29,12 +30,9 @@ import java.util.*;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Value("${hostaddress}")
-    private String hostAddress;
-
     private UserRepository userRepository;
 
-    private MailSender mailSender;
+    private ActivationService activationService;
 
     private PasswordEncoder passwordEncoder;
 
@@ -44,14 +42,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Autowired
-    public void setMailSender(MailSender mailSender) {
-        this.mailSender = mailSender;
+    public void setActivationService(ActivationService activationService) {
+        this.activationService = activationService;
     }
 
     @Autowired
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -80,53 +79,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void addUser(UserDto userDto) throws MailSendException{
+    public void addUserRegistered(UserDto userDto, String activationCode) throws MailSendException{
         String username = userDto.getUsername();
         String password = passwordEncoder.encode(userDto.getPassword());
         String email = userDto.getEmail();
-        String activationCode = UUID.randomUUID().toString();
 
         HashSet<Role> roles = new HashSet<>();
         roles.add(Role.USER);
 
-        try {
-            sendActivationEmail(email, username, activationCode);
-        }
-        catch (MailSendException e){
-            activationCode = null;
-
-            throw e;
-        }
-        finally {
-            User user = new User(username, password, email, activationCode, false, roles);
-            userRepository.save(user);
-        }
-    }
-
-    private void sendActivationEmail(String email, String username, String activationCode) throws MailSendException{
-        String subject = "Подтвердите email";
-        String text = String.format("Здравствуйте, %s! \n" +
-                        "Для подтверждения вашего email перейдите пожалуйста по ссылке: " + hostAddress + "/activate/%s",
-                username, activationCode);
-
-        mailSender.send(email, subject, text);
-
-    }
-
-    @Override
-    public boolean activateUser(String code) {
-        User user = userRepository.findByActivationCode(code);
-
-        if (user == null)
-            return false;
-
-        user.setActivationCode(null);
-
-        user.setEnabled(true);
+        User user = new User(username, password, email, activationCode, false, roles);
 
         userRepository.save(user);
 
-        return true;
     }
 
     @Override
@@ -158,6 +122,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String newPassword = userDto.getPassword();
         if (!Strings.isNullOrEmpty(newPassword))
             user.setPassword(newPassword);
+
+        if (userDto.isEnabled())
+            user.setActivationCode(null);
 
         user.setEnabled(userDto.isEnabled());
 

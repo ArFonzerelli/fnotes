@@ -19,7 +19,7 @@ public interface UserService {
 
     UserDetails loadUserByUsername(String username);
 
-    void addUser(UserDto userDto);
+    void addUserRegistered(UserDto userDto, String activationCode);
 
     Iterable<User> getAllUsers();
 
@@ -36,8 +36,6 @@ public interface UserService {
     void updateUserProfile(ProfileDto profileDto);
 
     void updateUserPassword(PasswordDto passwordDto);
-
-    boolean activateUser(String code);
 
     Map<String,String> checkUserExists(UserDto userDto);
 }
