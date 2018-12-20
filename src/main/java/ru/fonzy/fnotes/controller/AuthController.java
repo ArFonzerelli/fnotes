@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class LoginController {
+public class AuthController {
 
     @GetMapping("/")
     public String baseRedirect(){
@@ -22,5 +22,7 @@ public class LoginController {
         model.addAttribute("error_msg", "Вы ввели неверное имя пользователя/пароль или Ваша учетная запись не активна.");
         return "auth/login";
     }
+
+
 
 }

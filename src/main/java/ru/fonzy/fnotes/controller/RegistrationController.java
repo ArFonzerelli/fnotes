@@ -63,19 +63,19 @@ public class RegistrationController {
         boolean activationEmailSent = activationService.sendActivationEmail(userDto.getEmail(), userDto.getUsername(), activationCode);
 
         if (!activationEmailSent)
-            return "redirect:/send_email_failed";
+            return "redirect:/register_email_failed";
 
-        return "redirect:/email_confirm";
+        return "redirect:/register_email_sent";
     }
 
-    @GetMapping("/email_confirm")
+    @GetMapping("/register_email_sent")
     public String emailConfirmPage(){
-        return "auth/email_confirm";
+        return "auth/tech/register_email_sent";
     }
 
-    @GetMapping("/send_email_failed")
+    @GetMapping("/register_email_failed")
     public String sendEmailFailedPage(){
-        return "auth/send_email_failed";
+        return "auth/tech/register_email_failed";
     }
 
     @GetMapping("/activate/{code}")

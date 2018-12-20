@@ -1,4 +1,4 @@
-<#import "../parts/auth.ftl" as a>
+<#import "../../parts/auth.ftl" as a>
 
 <@a.auth_pages>
 <div class="container"><h3>Возникли проблемы с отправкой email с кодом подтверждения. Ваша учетная запись не активирована. Администратор может активировать ее вручную.</h3>

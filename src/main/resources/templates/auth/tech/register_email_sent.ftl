@@ -1,4 +1,4 @@
-<#import "../parts/auth.ftl" as a
+<#import "../../parts/auth.ftl" as a
 >
 
 <@a.auth_pages>
