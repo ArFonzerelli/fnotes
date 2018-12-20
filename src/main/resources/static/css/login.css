@@ -53,6 +53,16 @@ body {
     box-shadow: none;
     border-color: #ccc;
 }
+
+.form-label{
+    text-decoration: none;
+    color: #666;
+    font-weight: normal;
+    font-size: 15px;
+    padding-right: 7px;
+}
+
+
 .btn-login {
     background-color: #59B2E0;
     outline: none;

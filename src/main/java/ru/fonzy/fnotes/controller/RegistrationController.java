@@ -70,12 +70,12 @@ public class RegistrationController {
 
     @GetMapping("/register_email_sent")
     public String emailConfirmPage(){
-        return "auth/tech/register_email_sent";
+        return "auth/tech/registerEmailSent";
     }
 
     @GetMapping("/register_email_failed")
     public String sendEmailFailedPage(){
-        return "auth/tech/register_email_failed";
+        return "auth/tech/registerEmailFailed";
     }
 
     @GetMapping("/activate/{code}")

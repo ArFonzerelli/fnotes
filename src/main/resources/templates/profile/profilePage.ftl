@@ -28,10 +28,6 @@
                                     <div class="changepass-link"><a href="/profile/change_password?id=${user.id}">Смена пароля</a></div>
                                 </div>
 
-                                <div class="form-group">
-                                    <div class="changepass-link"></div>
-                                </div>
-
                                 <div class="row">
                                     <div class="col-sm-6 col-sm-offset-3">
                                         <input type="submit" name="edit-user-submit" id="edit-user-submit" tabindex="4" class="form-control btn btn-edit-user" value="Подтвердить изменения">
