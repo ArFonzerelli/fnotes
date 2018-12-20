@@ -20,6 +20,7 @@
 
                                 <div class="form-group">
                                     <#if email_failed??><div class="error_msg">${email_failed}</div></#if>
+                                    <#if email_not_found??><div class="error_msg">${email_not_found}</div></#if>
                                     <label for="email" class="form-label">Введите Email, указанный при регистрации</label>
                                     <input type="text" name="email" id="email" tabindex="2" class="form-control" placeholder="Email" value="">
                                 </div>

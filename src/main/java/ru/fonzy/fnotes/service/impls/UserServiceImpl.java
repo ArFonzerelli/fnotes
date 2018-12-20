@@ -168,4 +168,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (!Strings.isNullOrEmpty(passwordDto.getPassword()))
             user.setPassword(passwordEncoder.encode(password));
     }
+
+    @Override
+    public User getUser(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

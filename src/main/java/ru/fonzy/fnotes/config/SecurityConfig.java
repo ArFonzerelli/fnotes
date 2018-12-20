@@ -45,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers("/login", "/register", "/activate/*").permitAll()
                     .antMatchers("register_email_sent", "register_email_failed").permitAll()
+                    .antMatchers("pass_recover_email_sent", "pass_recover_email_failed").permitAll()
                     .antMatchers("/notes/**").authenticated()
                     .antMatchers("/profile/**").authenticated()
                     .antMatchers("/users/**").hasAuthority("ADMIN")

@@ -6,13 +6,13 @@ import org.springframework.mail.MailSendException;
 import org.springframework.stereotype.Service;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.repository.UserRepository;
-import ru.fonzy.fnotes.service.ActivationService;
 import ru.fonzy.fnotes.service.MailSender;
+import ru.fonzy.fnotes.service.PasswordRecoverService;
 
 import java.util.UUID;
 
 @Service
-public class ActivationServiceImpl implements ActivationService {
+public class PasswordRecoverSeriveceImpl implements PasswordRecoverService {
 
     @Value("${hostaddress}")
     private String hostAddress;
@@ -32,36 +32,32 @@ public class ActivationServiceImpl implements ActivationService {
     }
 
     @Override
-    public String getActivationCode() {
+    public String getPasswordRecoverCode() {
         return UUID.randomUUID().toString();
     }
 
     @Override
-    public boolean sendActivationEmail(String email, String username, String activationCode) {
-        String subject = "Подтвердите email";
+    public boolean sendPasswordRecoverEmail(String email, String username, String recoverPasswordCode) {
+        String subject = "Восстановление пароля";
         String text = String.format("Здравствуйте, %s! \n" +
-                        "Для подтверждения вашего email перейдите пожалуйста по ссылке: " + hostAddress + "/activate/%s",
-                username, activationCode);
+                        "Для восстановления Вашего пароля перейдите пожалуйста по ссылке: " + hostAddress + "/activate/%s",
+                username, recoverPasswordCode);
 
 
-        return mailSender.send(email, subject, text);
-
+           return mailSender.send(email, subject, text);
     }
 
     @Override
-    public boolean activateUserByActivationCode(String code) {
-        User user = userRepository.findByActivationCode(code);
+    public boolean recoverPasswordByRecoverCode(String code) {
+        User user = userRepository.findByPasswordRecoverCode(code);
 
         if (user == null)
             return false;
 
-        user.setActivationCode(null);
-
-        user.setEnabled(true);
+        user.setPasswordRecoverCode(null);
 
         userRepository.save(user);
 
         return true;
     }
-
 }

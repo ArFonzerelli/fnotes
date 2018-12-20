@@ -38,4 +38,6 @@ public interface UserService {
     void updateUserPassword(PasswordDto passwordDto);
 
     Map<String,String> checkUserExists(UserDto userDto);
+
+    User getUser(String email);
 }
