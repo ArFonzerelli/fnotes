@@ -57,7 +57,7 @@ public class PasswordRecoverController {
             return "auth/passwordRecover";
         }
 
-        String passwordRecoverCode = passwordRecoverService.getPasswordRecoverCode();
+        String passwordRecoverCode = passwordRecoverService.getUniqueCode();
         userService.addPasswordRecoverCode(user, passwordRecoverCode);
 
         boolean passwordRecoverCodeSent = passwordRecoverService.sendPasswordRecoverEmail(user.getEmail(), user.getUsername(), passwordRecoverCode);

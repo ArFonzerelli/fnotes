@@ -57,7 +57,7 @@ public class RegistrationController {
             return "auth/register";
         }
 
-        String activationCode = activationService.getActivationCode();
+        String activationCode = activationService.getUniqueCode();
         userService.addUserRegistered(userDto, activationCode);
 
         boolean activationEmailSent = activationService.sendActivationEmail(userDto.getEmail(), userDto.getUsername(), activationCode);

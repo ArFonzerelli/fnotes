@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.fonzy.fnotes.domain.User;
 import ru.fonzy.fnotes.repository.UserRepository;
 import ru.fonzy.fnotes.service.ActivationService;
+import ru.fonzy.fnotes.service.CodeGeneratorService;
 import ru.fonzy.fnotes.service.MailSender;
 
 import java.util.UUID;
@@ -29,11 +30,6 @@ public class ActivationServiceImpl implements ActivationService {
     @Autowired
     public void setMailSender(MailSender mailSender) {
         this.mailSender = mailSender;
-    }
-
-    @Override
-    public String getActivationCode() {
-        return UUID.randomUUID().toString();
     }
 
     @Override
