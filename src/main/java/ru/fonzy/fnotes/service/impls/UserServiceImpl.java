@@ -173,4 +173,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getUser(String email) {
         return userRepository.findByEmail(email);
     }
+
+    @Override
+    public void addPasswordRecoverCode(User user, String passwordRecoverCode) {
+        user.setPasswordRecoverCode(passwordRecoverCode);
+        userRepository.save(user);
+    }
 }

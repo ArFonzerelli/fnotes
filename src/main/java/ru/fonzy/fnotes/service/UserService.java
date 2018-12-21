@@ -40,4 +40,6 @@ public interface UserService {
     Map<String,String> checkUserExists(UserDto userDto);
 
     User getUser(String email);
+
+    void addPasswordRecoverCode(User user, String passwordRecoverCode);
 }

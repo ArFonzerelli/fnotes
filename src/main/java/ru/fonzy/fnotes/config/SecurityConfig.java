@@ -44,8 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                     .antMatchers("/login", "/register", "/activate/*").permitAll()
-                    .antMatchers("register_email_sent", "register_email_failed").permitAll()
-                    .antMatchers("pass_recover_email_sent", "pass_recover_email_failed").permitAll()
+                    .antMatchers("/register_email_sent", "/register_email_failed").permitAll()
+                    .antMatchers("/pass_recover_email_sent", "/pass_recover_email_failed").permitAll()
+//                    .antMatchers("/new_password").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     .antMatchers("/notes/**").authenticated()
                     .antMatchers("/profile/**").authenticated()
                     .antMatchers("/users/**").hasAuthority("ADMIN")
