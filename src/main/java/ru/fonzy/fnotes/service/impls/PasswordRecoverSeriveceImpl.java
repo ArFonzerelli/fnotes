@@ -43,16 +43,14 @@ public class PasswordRecoverSeriveceImpl implements PasswordRecoverService {
 
     @Override
     public boolean sendPasswordRecoverEmail(String email, String username, String recoverPasswordCode) {
-//        String subject = "Восстановление пароля";
-//        String text = String.format("Здравствуйте, %s! \n" +
-//                        "Для восстановления Вашего пароля перейдите пожалуйста по ссылке: " + hostAddress + "/recover/%s",
-//                username, recoverPasswordCode);
-//
-//
-//           return mailSender.send(email, subject, text);
-        System.out.println(hostAddress + "/recover/" + recoverPasswordCode);
+        String subject = "Восстановление пароля";
+        String text = String.format("Здравствуйте, %s! \n" +
+                        "Для восстановления Вашего пароля перейдите пожалуйста по ссылке: " + hostAddress + "/recover/%s",
+                username, recoverPasswordCode);
 
-        return true;
+
+        return mailSender.send(email, subject, text);
+
     }
 
     @Override
