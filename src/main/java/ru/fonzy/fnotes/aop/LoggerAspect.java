@@ -13,20 +13,10 @@ import java.util.Arrays;
 @Component
 public class LoggerAspect {
 
-//    @Before("execution(* ru.fonzy.fnotes.controller..*(..)) ||" +
-//            "execution(* ru.fonzy.fnotes.service..*(..))")
-//    public void beforeMethodLogger(JoinPoint joinPoint) throws Throwable{
-//        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-//        Method method = signature.getMethod();
-//
-//
-//
-//    }
-
     @AfterReturning(value = "execution(* ru.fonzy.fnotes.controller..*(..)) ||" +
                             "execution(* ru.fonzy.fnotes.service..*(..))",
                     returning = "retVal")
-    public void afterReturningLogger(JoinPoint joinPoint, Object retVal) throws Throwable{
+    public void afterReturningLogger(JoinPoint joinPoint, Object retVal) {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Method method = signature.getMethod();
 

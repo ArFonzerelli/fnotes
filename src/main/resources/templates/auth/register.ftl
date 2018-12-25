@@ -42,6 +42,10 @@
                                     <input type="password" name="confirmPassword" id="confirmPassword" tabindex="2" class="form-control" placeholder="Повторите пароль">
                                 </div>
                                 <div class="form-group">
+                                    <#if captcha_failed??><div class="error_msg">${captcha_failed}</div></#if>
+                                    <div class="g-recaptcha" data-sitekey="6Ld8sIQUAAAAALnP4LAOyK3oj6dBl1vamJqrOyQ5"></div>
+                                </div>
+                                <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
                                             <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Зарегистрироваться">

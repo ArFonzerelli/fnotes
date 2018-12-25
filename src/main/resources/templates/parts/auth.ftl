@@ -9,7 +9,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
     <link rel="stylesheet" type="text/css" href="/static/css/login.css">
-    <#--<link rel="stylesheet" type="text/css" href="/static/css/style.css">-->
+
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 
 </head>
 <body>
