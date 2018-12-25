@@ -18,7 +18,7 @@ public class NoteDto {
 
     @NotNull()
     @Size(min = 1, message = "Текст заметки не может быть пустым")
-    @Size(max = 100, message = "Текст заметки слишком большой. Максимальный размер 100 символов")
+    @Size(max = 10000, message = "Текст заметки слишком большой. Максимальный размер 10000 символов")
     private String text;
 
     private String category;

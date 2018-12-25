@@ -1,5 +1,6 @@
 package ru.fonzy.fnotes.controller;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import ru.fonzy.fnotes.service.NoteService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.logging.Level;
 
 @Controller
 @RequestMapping("notes")
@@ -111,7 +113,6 @@ public class NoteController {
                              @Valid NoteDto noteDto,
                              BindingResult bindingResult,
                              Model model){
-
         if (bindingResult.hasErrors()){
             ErrorHelper.addErrors(bindingResult, model);
             model.addAttribute("note", noteDto);
