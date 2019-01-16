@@ -16,10 +16,10 @@ public class CategoryDto {
     private long id;
 
     @Size(min = 1, message = "Название категории не может быть пустым")
-    @Size(max = 25, message = "Максимальный длина названия категории 25 символов")
+    @Size(max = 25, message = "Максимальная длина названия категории 25 символов")
     private String categoryName;
 
     @Size(min = 1, message = "Название категории не может быть пустым")
-    @Size(max = 25, message = "Максимальный длина названия категории 25 символов")
+    @Size(max = 25, message = "Максимальная длина названия категории 25 символов")
     private String editCategoryName;
 }

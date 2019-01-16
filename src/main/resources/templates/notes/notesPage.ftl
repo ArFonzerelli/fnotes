@@ -22,8 +22,8 @@
         </div>
     </div>
 
-    <div class="col-md-8">
-
+    <div class="col-md-10">
+        <div class="notes-page-row">
     <#if notes??>
     <#list notes as note>
 
@@ -54,9 +54,9 @@
         <#elseif no_notes??>
             <div class="title"><label>${no_notes}</label></div>
     </#if>
+        </div>
 
     </div>
-
 </@c.page>
 
 

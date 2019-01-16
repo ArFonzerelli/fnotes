@@ -162,12 +162,16 @@ a.shape-text:hover{
     bottom: 25px;
 }
 
+.notes-page-row{
+   max-width: 1400px;
+}
+
 .note {
     min-height:300px;
 }
 
 .note{
-    background:#fff; border:1px solid #ddd; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); margin: 15px 0; overflow:hidden;
+    background:#fff; border:1px solid #ddd; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); margin-bottom: 10px; overflow:hidden;
 }
 
 .note-radius{
